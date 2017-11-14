@@ -28,12 +28,14 @@ public class LambdaComparator {
 
         for(People people : testList){
             System.out.println("old name list:"+people.getName());
+            System.out.println(people.toString());
         }
         Comparator<People> comparator = (t1, t2) -> t1.getName().compareTo(t2.getName());
         Collections.sort(testList, comparator);
 
         for(People people : testList){
             System.out.println("new name list:"+people.getName());
+            System.out.println(people.toString());
         }
 
 
