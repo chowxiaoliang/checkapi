@@ -20,7 +20,7 @@ public class TransferExcelToJson {
 
     private String getPath(){
         try{
-            File file = new File("E:\\checkapi\\check-service\\src\\main\\resources\\files\\芝麻返回详细数据20171027.xlsx");
+            File file = new File("F:\\github\\checkapi\\check-service\\src\\main\\resources\\files\\芝麻返回详细数据20171128.xlsx");
             return file.getAbsolutePath();
         }catch (Exception e){
             e.printStackTrace();
@@ -132,7 +132,7 @@ public class TransferExcelToJson {
             String resultJson = recordsJson.toJSONString();
             String finalStr = formatJson(resultJson);
             System.out.println(finalStr);
-            FileWriter fileWriter = new FileWriter("E:\\checkapi\\check-service\\src\\main\\resources\\files\\fileNew.json");
+            FileWriter fileWriter = new FileWriter("F:\\github\\checkapi\\check-service\\src\\main\\resources\\files\\芝麻返回详细数据20171128.json");
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(finalStr);
             bufferedWriter.flush();
