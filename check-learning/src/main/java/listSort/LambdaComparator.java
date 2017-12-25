@@ -3,7 +3,6 @@ package listSort;
 import commonbeans.People;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -23,19 +22,32 @@ public class LambdaComparator {
         people2.setName("zhouliang");
         people2.setSex("male");
 
-        testList.add(people2);
         testList.add(people1);
+        testList.add(people2);
 
         for(People people : testList){
-            System.out.println("old name list:"+people.getName());
-            System.out.println(people.toString());
+            System.out.println("old name list:"+people.getAge());
         }
-        Comparator<People> comparator = (t1, t2) -> t1.getName().compareTo(t2.getName());
-        Collections.sort(testList, comparator);
+        //升序
+        Comparator<People> comparator1 = Comparator.comparing(People::getAge);
+        //降序
+        Comparator<People> comparator2 = ((p1, p2) -> p2.getAge().compareTo(p1.getAge()));
+        //升序
+        Comparator<People> comparator3 = ((p1, p2)->{return p1.getAge()-p2.getAge();});
+        //升序
+        Comparator<People> comparator4 = Comparator.comparingInt(People::getAge);
+        //降序
+        Comparator<People> comparator5 = ((p1, p2)-> p2.getAge()-p1.getAge());
+
+//        testList.sort(comparator1);
+//        testList.sort(comparator2);
+//        testList.sort(comparator3);
+//        testList.sort(comparator4);
+        testList.sort(comparator5);
+
 
         for(People people : testList){
-            System.out.println("new name list:"+people.getName());
-            System.out.println(people.toString());
+            System.out.println("new name list:"+people.getAge());
         }
 
 
