@@ -3,7 +3,6 @@ package com.zl.checkapi.reptile;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class FirstTest {
         Elements e = doc.getElementsByTag("section");
         System.out.println("总的文档内容是：");
         System.out.println(e);
-        Element header = e.select("")
+
 
 
     }

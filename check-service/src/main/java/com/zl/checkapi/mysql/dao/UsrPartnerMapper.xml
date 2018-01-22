@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zl.checkapi.mysql.dao.UsrPartnerMapper" >
+  <resultMap id="BaseResultMap" type="com.zl.checkapi.mysql.domain.UsrPartner" >
+    <id column="custom_id" property="customId" jdbcType="VARCHAR" />
+    <result column="partner_id" property="partnerId" jdbcType="VARCHAR" />
+    <result column="operation_id" property="operationId" jdbcType="VARCHAR" />
+    <result column="custom_alias" property="customAlias" jdbcType="VARCHAR" />
+    <result column="partner_status" property="partnerStatus" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="trail_days" property="trailDays" jdbcType="INTEGER" />
+    <result column="effective_date" property="effectiveDate" jdbcType="DATE" />
+    <result column="expire_date" property="expireDate" jdbcType="DATE" />
+    <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
+    <result column="partner_fullname" property="partnerFullname" jdbcType="VARCHAR" />
+    <result column="legel_person" property="legelPerson" jdbcType="VARCHAR" />
+    <result column="partner_city" property="partnerCity" jdbcType="VARCHAR" />
+    <result column="partner_province" property="partnerProvince" jdbcType="VARCHAR" />
+    <result column="verify_key" property="verifyKey" jdbcType="VARCHAR" />
+    <result column="partner_level" property="partnerLevel" jdbcType="VARCHAR" />
+    <result column="partner_desp" property="partnerDesp" jdbcType="VARCHAR" />
+    <result column="business_licence_code" property="businessLicenceCode" jdbcType="VARCHAR" />
+    <result column="business_licence_file" property="businessLicenceFile" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="contract_type" property="contractType" jdbcType="VARCHAR" />
+    <result column="train_in" property="trainIn" jdbcType="INTEGER" />
+    <result column="finance_type" property="financeType" jdbcType="VARCHAR" />
+    <result column="credit_cloud_status" property="creditCloudStatus" jdbcType="INTEGER" />
+    <result column="es_status" property="esStatus" jdbcType="INTEGER" />
+    <result column="old_verify_key" property="oldVerifyKey" jdbcType="VARCHAR" />
+    <result column="usr_location" property="usrLocation" jdbcType="VARCHAR" />
+    <result column="encrypt_key" property="encryptKey" jdbcType="VARCHAR" />
+    <result column="encrypt_key_time" property="encryptKeyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    custom_id, partner_id, operation_id, custom_alias, partner_status, status, trail_days, 
+    effective_date, expire_date, partner_name, partner_fullname, legel_person, partner_city, 
+    partner_province, verify_key, partner_level, partner_desp, business_licence_code, 
+    business_licence_file, create_user, create_time, update_user, update_time, contract_type, 
+    train_in, finance_type, credit_cloud_status, es_status, old_verify_key, usr_location, 
+    encrypt_key, encrypt_key_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zl.checkapi.mysql.domain.UsrPartnerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from usr_partner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from usr_partner
+    where custom_id = #{customId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from usr_partner
+    where custom_id = #{customId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zl.checkapi.mysql.domain.UsrPartnerExample" >
+    delete from usr_partner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zl.checkapi.mysql.domain.UsrPartner" >
+    insert into usr_partner (custom_id, partner_id, operation_id, 
+      custom_alias, partner_status, status, 
+      trail_days, effective_date, expire_date, 
+      partner_name, partner_fullname, legel_person, 
+      partner_city, partner_province, verify_key, 
+      partner_level, partner_desp, business_licence_code, 
+      business_licence_file, create_user, create_time, 
+      update_user, update_time, contract_type, 
+      train_in, finance_type, credit_cloud_status, 
+      es_status, old_verify_key, usr_location, 
+      encrypt_key, encrypt_key_time)
+    values (#{customId,jdbcType=VARCHAR}, #{partnerId,jdbcType=VARCHAR}, #{operationId,jdbcType=VARCHAR}, 
+      #{customAlias,jdbcType=VARCHAR}, #{partnerStatus,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{trailDays,jdbcType=INTEGER}, #{effectiveDate,jdbcType=DATE}, #{expireDate,jdbcType=DATE}, 
+      #{partnerName,jdbcType=VARCHAR}, #{partnerFullname,jdbcType=VARCHAR}, #{legelPerson,jdbcType=VARCHAR}, 
+      #{partnerCity,jdbcType=VARCHAR}, #{partnerProvince,jdbcType=VARCHAR}, #{verifyKey,jdbcType=VARCHAR}, 
+      #{partnerLevel,jdbcType=VARCHAR}, #{partnerDesp,jdbcType=VARCHAR}, #{businessLicenceCode,jdbcType=VARCHAR}, 
+      #{businessLicenceFile,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{contractType,jdbcType=VARCHAR}, 
+      #{trainIn,jdbcType=INTEGER}, #{financeType,jdbcType=VARCHAR}, #{creditCloudStatus,jdbcType=INTEGER}, 
+      #{esStatus,jdbcType=INTEGER}, #{oldVerifyKey,jdbcType=VARCHAR}, #{usrLocation,jdbcType=VARCHAR}, 
+      #{encryptKey,jdbcType=VARCHAR}, #{encryptKeyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zl.checkapi.mysql.domain.UsrPartner" >
+    insert into usr_partner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customId != null" >
+        custom_id,
+      </if>
+      <if test="partnerId != null" >
+        partner_id,
+      </if>
+      <if test="operationId != null" >
+        operation_id,
+      </if>
+      <if test="customAlias != null" >
+        custom_alias,
+      </if>
+      <if test="partnerStatus != null" >
+        partner_status,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="trailDays != null" >
+        trail_days,
+      </if>
+      <if test="effectiveDate != null" >
+        effective_date,
+      </if>
+      <if test="expireDate != null" >
+        expire_date,
+      </if>
+      <if test="partnerName != null" >
+        partner_name,
+      </if>
+      <if test="partnerFullname != null" >
+        partner_fullname,
+      </if>
+      <if test="legelPerson != null" >
+        legel_person,
+      </if>
+      <if test="partnerCity != null" >
+        partner_city,
+      </if>
+      <if test="partnerProvince != null" >
+        partner_province,
+      </if>
+      <if test="verifyKey != null" >
+        verify_key,
+      </if>
+      <if test="partnerLevel != null" >
+        partner_level,
+      </if>
+      <if test="partnerDesp != null" >
+        partner_desp,
+      </if>
+      <if test="businessLicenceCode != null" >
+        business_licence_code,
+      </if>
+      <if test="businessLicenceFile != null" >
+        business_licence_file,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="contractType != null" >
+        contract_type,
+      </if>
+      <if test="trainIn != null" >
+        train_in,
+      </if>
+      <if test="financeType != null" >
+        finance_type,
+      </if>
+      <if test="creditCloudStatus != null" >
+        credit_cloud_status,
+      </if>
+      <if test="esStatus != null" >
+        es_status,
+      </if>
+      <if test="oldVerifyKey != null" >
+        old_verify_key,
+      </if>
+      <if test="usrLocation != null" >
+        usr_location,
+      </if>
+      <if test="encryptKey != null" >
+        encrypt_key,
+      </if>
+      <if test="encryptKeyTime != null" >
+        encrypt_key_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customId != null" >
+        #{customId,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerId != null" >
+        #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationId != null" >
+        #{operationId,jdbcType=VARCHAR},
+      </if>
+      <if test="customAlias != null" >
+        #{customAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerStatus != null" >
+        #{partnerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="trailDays != null" >
+        #{trailDays,jdbcType=INTEGER},
+      </if>
+      <if test="effectiveDate != null" >
+        #{effectiveDate,jdbcType=DATE},
+      </if>
+      <if test="expireDate != null" >
+        #{expireDate,jdbcType=DATE},
+      </if>
+      <if test="partnerName != null" >
+        #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerFullname != null" >
+        #{partnerFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="legelPerson != null" >
+        #{legelPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCity != null" >
+        #{partnerCity,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerProvince != null" >
+        #{partnerProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyKey != null" >
+        #{verifyKey,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerLevel != null" >
+        #{partnerLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerDesp != null" >
+        #{partnerDesp,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceCode != null" >
+        #{businessLicenceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceFile != null" >
+        #{businessLicenceFile,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractType != null" >
+        #{contractType,jdbcType=VARCHAR},
+      </if>
+      <if test="trainIn != null" >
+        #{trainIn,jdbcType=INTEGER},
+      </if>
+      <if test="financeType != null" >
+        #{financeType,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCloudStatus != null" >
+        #{creditCloudStatus,jdbcType=INTEGER},
+      </if>
+      <if test="esStatus != null" >
+        #{esStatus,jdbcType=INTEGER},
+      </if>
+      <if test="oldVerifyKey != null" >
+        #{oldVerifyKey,jdbcType=VARCHAR},
+      </if>
+      <if test="usrLocation != null" >
+        #{usrLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="encryptKey != null" >
+        #{encryptKey,jdbcType=VARCHAR},
+      </if>
+      <if test="encryptKeyTime != null" >
+        #{encryptKeyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zl.checkapi.mysql.domain.UsrPartnerExample" resultType="java.lang.Integer" >
+    select count(*) from usr_partner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update usr_partner
+    <set >
+      <if test="record.customId != null" >
+        custom_id = #{record.customId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerId != null" >
+        partner_id = #{record.partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operationId != null" >
+        operation_id = #{record.operationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customAlias != null" >
+        custom_alias = #{record.customAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerStatus != null" >
+        partner_status = #{record.partnerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.trailDays != null" >
+        trail_days = #{record.trailDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.effectiveDate != null" >
+        effective_date = #{record.effectiveDate,jdbcType=DATE},
+      </if>
+      <if test="record.expireDate != null" >
+        expire_date = #{record.expireDate,jdbcType=DATE},
+      </if>
+      <if test="record.partnerName != null" >
+        partner_name = #{record.partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerFullname != null" >
+        partner_fullname = #{record.partnerFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legelPerson != null" >
+        legel_person = #{record.legelPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCity != null" >
+        partner_city = #{record.partnerCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerProvince != null" >
+        partner_province = #{record.partnerProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyKey != null" >
+        verify_key = #{record.verifyKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerLevel != null" >
+        partner_level = #{record.partnerLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerDesp != null" >
+        partner_desp = #{record.partnerDesp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessLicenceCode != null" >
+        business_licence_code = #{record.businessLicenceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessLicenceFile != null" >
+        business_licence_file = #{record.businessLicenceFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.contractType != null" >
+        contract_type = #{record.contractType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainIn != null" >
+        train_in = #{record.trainIn,jdbcType=INTEGER},
+      </if>
+      <if test="record.financeType != null" >
+        finance_type = #{record.financeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditCloudStatus != null" >
+        credit_cloud_status = #{record.creditCloudStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.esStatus != null" >
+        es_status = #{record.esStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.oldVerifyKey != null" >
+        old_verify_key = #{record.oldVerifyKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usrLocation != null" >
+        usr_location = #{record.usrLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.encryptKey != null" >
+        encrypt_key = #{record.encryptKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.encryptKeyTime != null" >
+        encrypt_key_time = #{record.encryptKeyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update usr_partner
+    set custom_id = #{record.customId,jdbcType=VARCHAR},
+      partner_id = #{record.partnerId,jdbcType=VARCHAR},
+      operation_id = #{record.operationId,jdbcType=VARCHAR},
+      custom_alias = #{record.customAlias,jdbcType=VARCHAR},
+      partner_status = #{record.partnerStatus,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      trail_days = #{record.trailDays,jdbcType=INTEGER},
+      effective_date = #{record.effectiveDate,jdbcType=DATE},
+      expire_date = #{record.expireDate,jdbcType=DATE},
+      partner_name = #{record.partnerName,jdbcType=VARCHAR},
+      partner_fullname = #{record.partnerFullname,jdbcType=VARCHAR},
+      legel_person = #{record.legelPerson,jdbcType=VARCHAR},
+      partner_city = #{record.partnerCity,jdbcType=VARCHAR},
+      partner_province = #{record.partnerProvince,jdbcType=VARCHAR},
+      verify_key = #{record.verifyKey,jdbcType=VARCHAR},
+      partner_level = #{record.partnerLevel,jdbcType=VARCHAR},
+      partner_desp = #{record.partnerDesp,jdbcType=VARCHAR},
+      business_licence_code = #{record.businessLicenceCode,jdbcType=VARCHAR},
+      business_licence_file = #{record.businessLicenceFile,jdbcType=VARCHAR},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      contract_type = #{record.contractType,jdbcType=VARCHAR},
+      train_in = #{record.trainIn,jdbcType=INTEGER},
+      finance_type = #{record.financeType,jdbcType=VARCHAR},
+      credit_cloud_status = #{record.creditCloudStatus,jdbcType=INTEGER},
+      es_status = #{record.esStatus,jdbcType=INTEGER},
+      old_verify_key = #{record.oldVerifyKey,jdbcType=VARCHAR},
+      usr_location = #{record.usrLocation,jdbcType=VARCHAR},
+      encrypt_key = #{record.encryptKey,jdbcType=VARCHAR},
+      encrypt_key_time = #{record.encryptKeyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zl.checkapi.mysql.domain.UsrPartner" >
+    update usr_partner
+    <set >
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationId != null" >
+        operation_id = #{operationId,jdbcType=VARCHAR},
+      </if>
+      <if test="customAlias != null" >
+        custom_alias = #{customAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerStatus != null" >
+        partner_status = #{partnerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="trailDays != null" >
+        trail_days = #{trailDays,jdbcType=INTEGER},
+      </if>
+      <if test="effectiveDate != null" >
+        effective_date = #{effectiveDate,jdbcType=DATE},
+      </if>
+      <if test="expireDate != null" >
+        expire_date = #{expireDate,jdbcType=DATE},
+      </if>
+      <if test="partnerName != null" >
+        partner_name = #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerFullname != null" >
+        partner_fullname = #{partnerFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="legelPerson != null" >
+        legel_person = #{legelPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCity != null" >
+        partner_city = #{partnerCity,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerProvince != null" >
+        partner_province = #{partnerProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyKey != null" >
+        verify_key = #{verifyKey,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerLevel != null" >
+        partner_level = #{partnerLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerDesp != null" >
+        partner_desp = #{partnerDesp,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceCode != null" >
+        business_licence_code = #{businessLicenceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceFile != null" >
+        business_licence_file = #{businessLicenceFile,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractType != null" >
+        contract_type = #{contractType,jdbcType=VARCHAR},
+      </if>
+      <if test="trainIn != null" >
+        train_in = #{trainIn,jdbcType=INTEGER},
+      </if>
+      <if test="financeType != null" >
+        finance_type = #{financeType,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCloudStatus != null" >
+        credit_cloud_status = #{creditCloudStatus,jdbcType=INTEGER},
+      </if>
+      <if test="esStatus != null" >
+        es_status = #{esStatus,jdbcType=INTEGER},
+      </if>
+      <if test="oldVerifyKey != null" >
+        old_verify_key = #{oldVerifyKey,jdbcType=VARCHAR},
+      </if>
+      <if test="usrLocation != null" >
+        usr_location = #{usrLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="encryptKey != null" >
+        encrypt_key = #{encryptKey,jdbcType=VARCHAR},
+      </if>
+      <if test="encryptKeyTime != null" >
+        encrypt_key_time = #{encryptKeyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where custom_id = #{customId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zl.checkapi.mysql.domain.UsrPartner" >
+    update usr_partner
+    set partner_id = #{partnerId,jdbcType=VARCHAR},
+      operation_id = #{operationId,jdbcType=VARCHAR},
+      custom_alias = #{customAlias,jdbcType=VARCHAR},
+      partner_status = #{partnerStatus,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      trail_days = #{trailDays,jdbcType=INTEGER},
+      effective_date = #{effectiveDate,jdbcType=DATE},
+      expire_date = #{expireDate,jdbcType=DATE},
+      partner_name = #{partnerName,jdbcType=VARCHAR},
+      partner_fullname = #{partnerFullname,jdbcType=VARCHAR},
+      legel_person = #{legelPerson,jdbcType=VARCHAR},
+      partner_city = #{partnerCity,jdbcType=VARCHAR},
+      partner_province = #{partnerProvince,jdbcType=VARCHAR},
+      verify_key = #{verifyKey,jdbcType=VARCHAR},
+      partner_level = #{partnerLevel,jdbcType=VARCHAR},
+      partner_desp = #{partnerDesp,jdbcType=VARCHAR},
+      business_licence_code = #{businessLicenceCode,jdbcType=VARCHAR},
+      business_licence_file = #{businessLicenceFile,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      contract_type = #{contractType,jdbcType=VARCHAR},
+      train_in = #{trainIn,jdbcType=INTEGER},
+      finance_type = #{financeType,jdbcType=VARCHAR},
+      credit_cloud_status = #{creditCloudStatus,jdbcType=INTEGER},
+      es_status = #{esStatus,jdbcType=INTEGER},
+      old_verify_key = #{oldVerifyKey,jdbcType=VARCHAR},
+      usr_location = #{usrLocation,jdbcType=VARCHAR},
+      encrypt_key = #{encryptKey,jdbcType=VARCHAR},
+      encrypt_key_time = #{encryptKeyTime,jdbcType=TIMESTAMP}
+    where custom_id = #{customId,jdbcType=VARCHAR}
+  </update>
+</mapper>
