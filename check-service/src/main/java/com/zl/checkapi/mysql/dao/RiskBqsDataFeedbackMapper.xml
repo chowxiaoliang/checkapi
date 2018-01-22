@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zl.checkapi.mysql.dao.RiskBqsDataFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.zl.checkapi.mysql.domain.RiskBqsDataFeedback" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="risk_flow_no" property="riskFlowNo" jdbcType="VARCHAR" />
+    <result column="partner_id" property="partnerId" jdbcType="VARCHAR" />
+    <result column="cert_no" property="certNo" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="VARCHAR" />
+    <result column="loan_date" property="loanDate" jdbcType="VARCHAR" />
+    <result column="biz_date" property="bizDate" jdbcType="VARCHAR" />
+    <result column="over_due_amt" property="overDueAmt" jdbcType="VARCHAR" />
+    <result column="gmt_ovd_date" property="gmtOvdDate" jdbcType="VARCHAR" />
+    <result column="gmt_ovd_days" property="gmtOvdDays" jdbcType="VARCHAR" />
+    <result column="ovd_days_calways" property="ovdDaysCalways" jdbcType="VARCHAR" />
+    <result column="upload_data_source" property="uploadDataSource" jdbcType="VARCHAR" />
+    <result column="biz_type" property="bizType" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="review_status" property="reviewStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, risk_flow_no, partner_id, cert_no, name, mobile, amount, loan_date, biz_date, 
+    over_due_amt, gmt_ovd_date, gmt_ovd_days, ovd_days_calways, upload_data_source, biz_type, 
+    memo, review_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zl.checkapi.mysql.domain.RiskBqsDataFeedbackExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from risk_bqs_data_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from risk_bqs_data_feedback
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from risk_bqs_data_feedback
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zl.checkapi.mysql.domain.RiskBqsDataFeedbackExample" >
+    delete from risk_bqs_data_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zl.checkapi.mysql.domain.RiskBqsDataFeedback" >
+    insert into risk_bqs_data_feedback (id, risk_flow_no, partner_id, 
+      cert_no, name, mobile, 
+      amount, loan_date, biz_date, 
+      over_due_amt, gmt_ovd_date, gmt_ovd_days, 
+      ovd_days_calways, upload_data_source, biz_type, 
+      memo, review_status)
+    values (#{id,jdbcType=BIGINT}, #{riskFlowNo,jdbcType=VARCHAR}, #{partnerId,jdbcType=VARCHAR}, 
+      #{certNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=VARCHAR}, #{loanDate,jdbcType=VARCHAR}, #{bizDate,jdbcType=VARCHAR}, 
+      #{overDueAmt,jdbcType=VARCHAR}, #{gmtOvdDate,jdbcType=VARCHAR}, #{gmtOvdDays,jdbcType=VARCHAR}, 
+      #{ovdDaysCalways,jdbcType=VARCHAR}, #{uploadDataSource,jdbcType=VARCHAR}, #{bizType,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{reviewStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zl.checkapi.mysql.domain.RiskBqsDataFeedback" >
+    insert into risk_bqs_data_feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="riskFlowNo != null" >
+        risk_flow_no,
+      </if>
+      <if test="partnerId != null" >
+        partner_id,
+      </if>
+      <if test="certNo != null" >
+        cert_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="loanDate != null" >
+        loan_date,
+      </if>
+      <if test="bizDate != null" >
+        biz_date,
+      </if>
+      <if test="overDueAmt != null" >
+        over_due_amt,
+      </if>
+      <if test="gmtOvdDate != null" >
+        gmt_ovd_date,
+      </if>
+      <if test="gmtOvdDays != null" >
+        gmt_ovd_days,
+      </if>
+      <if test="ovdDaysCalways != null" >
+        ovd_days_calways,
+      </if>
+      <if test="uploadDataSource != null" >
+        upload_data_source,
+      </if>
+      <if test="bizType != null" >
+        biz_type,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="reviewStatus != null" >
+        review_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="riskFlowNo != null" >
+        #{riskFlowNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerId != null" >
+        #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null" >
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="loanDate != null" >
+        #{loanDate,jdbcType=VARCHAR},
+      </if>
+      <if test="bizDate != null" >
+        #{bizDate,jdbcType=VARCHAR},
+      </if>
+      <if test="overDueAmt != null" >
+        #{overDueAmt,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtOvdDate != null" >
+        #{gmtOvdDate,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtOvdDays != null" >
+        #{gmtOvdDays,jdbcType=VARCHAR},
+      </if>
+      <if test="ovdDaysCalways != null" >
+        #{ovdDaysCalways,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadDataSource != null" >
+        #{uploadDataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="bizType != null" >
+        #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewStatus != null" >
+        #{reviewStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zl.checkapi.mysql.domain.RiskBqsDataFeedbackExample" resultType="java.lang.Integer" >
+    select count(*) from risk_bqs_data_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update risk_bqs_data_feedback
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.riskFlowNo != null" >
+        risk_flow_no = #{record.riskFlowNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerId != null" >
+        partner_id = #{record.partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certNo != null" >
+        cert_no = #{record.certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanDate != null" >
+        loan_date = #{record.loanDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bizDate != null" >
+        biz_date = #{record.bizDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.overDueAmt != null" >
+        over_due_amt = #{record.overDueAmt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtOvdDate != null" >
+        gmt_ovd_date = #{record.gmtOvdDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtOvdDays != null" >
+        gmt_ovd_days = #{record.gmtOvdDays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ovdDaysCalways != null" >
+        ovd_days_calways = #{record.ovdDaysCalways,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadDataSource != null" >
+        upload_data_source = #{record.uploadDataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bizType != null" >
+        biz_type = #{record.bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewStatus != null" >
+        review_status = #{record.reviewStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update risk_bqs_data_feedback
+    set id = #{record.id,jdbcType=BIGINT},
+      risk_flow_no = #{record.riskFlowNo,jdbcType=VARCHAR},
+      partner_id = #{record.partnerId,jdbcType=VARCHAR},
+      cert_no = #{record.certNo,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=VARCHAR},
+      loan_date = #{record.loanDate,jdbcType=VARCHAR},
+      biz_date = #{record.bizDate,jdbcType=VARCHAR},
+      over_due_amt = #{record.overDueAmt,jdbcType=VARCHAR},
+      gmt_ovd_date = #{record.gmtOvdDate,jdbcType=VARCHAR},
+      gmt_ovd_days = #{record.gmtOvdDays,jdbcType=VARCHAR},
+      ovd_days_calways = #{record.ovdDaysCalways,jdbcType=VARCHAR},
+      upload_data_source = #{record.uploadDataSource,jdbcType=VARCHAR},
+      biz_type = #{record.bizType,jdbcType=VARCHAR},
+      memo = #{record.memo,jdbcType=VARCHAR},
+      review_status = #{record.reviewStatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zl.checkapi.mysql.domain.RiskBqsDataFeedback" >
+    update risk_bqs_data_feedback
+    <set >
+      <if test="riskFlowNo != null" >
+        risk_flow_no = #{riskFlowNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null" >
+        cert_no = #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="loanDate != null" >
+        loan_date = #{loanDate,jdbcType=VARCHAR},
+      </if>
+      <if test="bizDate != null" >
+        biz_date = #{bizDate,jdbcType=VARCHAR},
+      </if>
+      <if test="overDueAmt != null" >
+        over_due_amt = #{overDueAmt,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtOvdDate != null" >
+        gmt_ovd_date = #{gmtOvdDate,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtOvdDays != null" >
+        gmt_ovd_days = #{gmtOvdDays,jdbcType=VARCHAR},
+      </if>
+      <if test="ovdDaysCalways != null" >
+        ovd_days_calways = #{ovdDaysCalways,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadDataSource != null" >
+        upload_data_source = #{uploadDataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="bizType != null" >
+        biz_type = #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewStatus != null" >
+        review_status = #{reviewStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zl.checkapi.mysql.domain.RiskBqsDataFeedback" >
+    update risk_bqs_data_feedback
+    set risk_flow_no = #{riskFlowNo,jdbcType=VARCHAR},
+      partner_id = #{partnerId,jdbcType=VARCHAR},
+      cert_no = #{certNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=VARCHAR},
+      loan_date = #{loanDate,jdbcType=VARCHAR},
+      biz_date = #{bizDate,jdbcType=VARCHAR},
+      over_due_amt = #{overDueAmt,jdbcType=VARCHAR},
+      gmt_ovd_date = #{gmtOvdDate,jdbcType=VARCHAR},
+      gmt_ovd_days = #{gmtOvdDays,jdbcType=VARCHAR},
+      ovd_days_calways = #{ovdDaysCalways,jdbcType=VARCHAR},
+      upload_data_source = #{uploadDataSource,jdbcType=VARCHAR},
+      biz_type = #{bizType,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      review_status = #{reviewStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

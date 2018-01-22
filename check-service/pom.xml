@@ -138,6 +138,11 @@
             <artifactId>spring-expression</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
         <!-- Spring end-->
         <!--zookeeper start-->
         <dependency>
@@ -187,6 +192,38 @@
             <version>3.20.0-GA</version>
         </dependency>
         <!--dubbo end-->
+        <!-- mysql & mybatis -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.36</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>3.7.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.16</version>
+        </dependency>
+        <!-- mongoDB-->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver</artifactId>
+            <version>3.3.0</version>
+        </dependency>
         <!-- RESTful远程调用 -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -305,6 +342,12 @@
             <artifactId>serviceapi-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!--jsoup-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.1</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
@@ -313,6 +356,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <p.web.deploy.name>/serviceapi</p.web.deploy.name>
+                <p.web.res.root>/serviceapi/resources</p.web.res.root>
                 <p.dubbo.registry.address>zookeeper://192.168.1.212:2181</p.dubbo.registry.address>
                 <p.connection.url>jdbc:mysql://192.168.1.241:3306/risk?useUnicode=true&amp;characterEncoding=utf8
                 </p.connection.url>
@@ -324,13 +369,33 @@
                     MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAI22nXiHLgpfcQdOc0Mbb8t70pZdcCEUR11tJ/ZqH+yX9DMNwEkXAmHI15LgcQD7JpmF1YzL6LLqUx1W9L7jNqsCAwEAAQ==
                 </p.connection.publicKey>
                 <p.connection.url>jdbc:mysql://192.168.1.241:3306/risk?useUnicode=true&amp;characterEncoding=utf8</p.connection.url>
+                <p.metadata.broker.list>hadoop1:9092,hadoop2:9092,hadoop3:9092</p.metadata.broker.list>
+                <p.zookeeper.connect>hadoop1:2181,hadoop2:2181,hadoop3:2181</p.zookeeper.connect>
+                <p.service.kafka.metadata>hadoop1:9092,hadoop2:9092,hadoop3:9092</p.service.kafka.metadata>
+                <p.service.kafka.zookeeper>hadoop1:2181,hadoop2:2181,hadoop3:2181</p.service.kafka.zookeeper>
+                <p.file.upload>C:\\Users\\\lenovo\\Desktop\\</p.file.upload>
+                <p.hbase.zookeeper.quorum>hadoop1:2181,hadoop2:2181,hadoop3:2181</p.hbase.zookeeper.quorum>
                 <p.cluster.name>dev_es_cluster</p.cluster.name>
-                <p.cluster.nodes>192.168.1.240:9300</p.cluster.nodes>
+
+                <p.redisindex.jediscluster.ip>redis.baiqishi.com</p.redisindex.jediscluster.ip>
+                <p.redisindex.jediscluster.port>5067</p.redisindex.jediscluster.port>
+
+                <p.cluster.nodes>192.168.1.240:9250,192.168.1.240:9260</p.cluster.nodes>
+                <p.mg.dbname>crawler</p.mg.dbname>
+                <p.mg.username>crawler_cr</p.mg.username>
+                <p.mg.pwd>123456</p.mg.pwd>
+                <p.mg.hosts>192.168.1.241:27017</p.mg.hosts>
+                <p.mg.connections.perhost>100</p.mg.connections.perhost>
+                <p.mg.threads.multiplier>100</p.mg.threads.multiplier>
+                <p.mg.connect.timeout>30000</p.mg.connect.timeout>
+                <p.mg.max.waittime>120000</p.mg.max.waittime>
             </properties>
         </profile>
         <profile>
             <id>st</id>
             <properties>
+                <p.web.deploy.name>/serviceapi</p.web.deploy.name>
+                <p.web.res.root>/serviceapi/resources</p.web.res.root>
                 <p.dubbo.registry.address>zookeeper://10.0.0.1:2181</p.dubbo.registry.address>
                 <p.connection.url>jdbc:mysql://baiqishinet.mysql.rds.aliyuncs.com:3306/risk?useUnicode=true&amp;characterEncoding=utf8</p.connection.url>
                 <p.connection.username>prmi</p.connection.username>
@@ -349,12 +414,26 @@
                 <p.file.upload>/app/file/</p.file.upload>
                 <p.hbase.zookeeper.quorum>hadoop1:2181,hadoop2:2181,hadoop3:2181</p.hbase.zookeeper.quorum>
                 <p.cluster.name>my-application</p.cluster.name>
-                <p.cluster.nodes>10.0.0.15:9300</p.cluster.nodes>
+
+                <p.redisindex.jediscluster.ip>redis.baiqishi.com</p.redisindex.jediscluster.ip>
+                <p.redisindex.jediscluster.port>5067</p.redisindex.jediscluster.port>
+
+                <p.cluster.nodes>10.0.0.50:9200,10.0.0.50:9210</p.cluster.nodes>
+                <p.mg.dbname>crawler</p.mg.dbname>
+                <p.mg.username>crawler_cr</p.mg.username>
+                <p.mg.pwd>123456</p.mg.pwd>
+                <p.mg.hosts>10.0.0.21:27017</p.mg.hosts>
+                <p.mg.connections.perhost>100</p.mg.connections.perhost>
+                <p.mg.threads.multiplier>100</p.mg.threads.multiplier>
+                <p.mg.connect.timeout>30000</p.mg.connect.timeout>
+                <p.mg.max.waittime>120000</p.mg.max.waittime>
             </properties>
         </profile>
         <profile>
             <id>product</id>
             <properties>
+                <p.web.deploy.name>/serviceapi</p.web.deploy.name>
+                <p.web.res.root>/serviceapi/resources</p.web.res.root>
                 <p.dubbo.registry.address>zookeeper://10.0.0.7:2181?backup=10.0.0.6:2181</p.dubbo.registry.address>
                 <p.connection.url>jdbc:mysql://rm-j5e2391bge95395hf.mysql.rds.aliyuncs.com:3306/risk?useUnicode=true&amp;characterEncoding=utf8</p.connection.url>
                 <p.connection.username>risk</p.connection.username>
@@ -371,9 +450,22 @@
                 <p.kafka.topic.engine_to_exchange>engine_to_exchange_decision</p.kafka.topic.engine_to_exchange>
                 <p.kafka.type.event>decision</p.kafka.type.event>
                 <p.file.upload>/app/file/</p.file.upload>
-                <p.hbase.zookeeper.quorum>hadoop1:2181,hadoop2:2181,hadoop3:2181</p.hbase.zookeeper.quorum>
+
                 <p.cluster.name>prd_es_cluster</p.cluster.name>
-                <p.cluster.nodes>10.0.0.133:9300,10.0.0.134:9300,10.0.0.135:9300</p.cluster.nodes>
+
+                <p.redisindex.jediscluster.ip>redis.baiqishi.com</p.redisindex.jediscluster.ip>
+                <p.redisindex.jediscluster.port>5067</p.redisindex.jediscluster.port>
+
+                <p.hbase.zookeeper.quorum>hb-j5e517al6xib80rkb-001.hbase.rds.aliyuncs.com:2181,hb-j5e517al6xib80rkb-002.hbase.rds.aliyuncs.com:2181,hb-j5e517al6xib80rkb-003.hbase.rds.aliyuncs.com:2181</p.hbase.zookeeper.quorum>
+                <p.cluster.nodes>10.0.0.213:9200,10.0.0.214:9200,10.0.0.215:9200,10.1.0.212:9200,10.1.0.213:9200</p.cluster.nodes>
+                <p.mg.dbname>outerdata</p.mg.dbname>
+                <p.mg.username>outer_cr</p.mg.username>
+                <p.mg.pwd>helloOuter_cr@</p.mg.pwd>
+                <p.mg.hosts>dds-j5ed583e42e9f8241.mongodb.rds.aliyuncs.com:3717,dds-j5ed583e42e9f8242.mongodb.rds.aliyuncs.com:3717</p.mg.hosts>
+                <p.mg.connections.perhost>200</p.mg.connections.perhost>
+                <p.mg.threads.multiplier>200</p.mg.threads.multiplier>
+                <p.mg.connect.timeout>30000</p.mg.connect.timeout>
+                <p.mg.max.waittime>120000</p.mg.max.waittime>
             </properties>
         </profile>
     </profiles>

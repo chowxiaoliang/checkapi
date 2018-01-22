@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-3.0.xsd
+      http://www.springframework.org/schema/tx
+      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!--mongodb-->
+	<bean id="mongodbConfig" class="com.zl.checkapi.mongodb.MongodbConfig">
+		<property name="dbName" value="${p.mg.dbname}"/>
+		<property name="userName" value="${p.mg.username}"/>
+		<property name="password" value="${p.mg.pwd}"/>
+		<property name="hosts" value="${p.mg.hosts}"/>
+		<property name="connectionsPerHost" value="${p.mg.connections.perhost}"/>
+		<property name="connectTimeout" value="${p.mg.connect.timeout}"/>
+		<property name="maxWaitTime" value="${p.mg.max.waittime}"/>
+		<property name="threadsAllowedToBlockForConnectionMultiplier" value="${p.mg.threads.multiplier}"/>
+	</bean>
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="url" value="${connection.url}" />
+		<property name="username" value="${connection.username}" />
+		<property name="password" value="${connection.password}" />
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="${druid.minIdle}" />
+		<property name="maxActive" value="${druid.maxActive}" />
+		<property name="maxWait" value="${druid.maxWait}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />
+		<property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />
+		<property name="validationQuery" value="select NOW() from dual" />
+		<property name="testWhileIdle" value="${druid.testWhileIdle}" />
+		<property name="testOnBorrow" value="${druid.testOnBorrow}" />
+		<property name="testOnReturn" value="${druid.testOnReturn}" />
+		<property name="poolPreparedStatements" value="${druid.poolPreparedStatements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}" />
+		<!-- 解密密码必须要配置的项 -->
+        <property name="filters" value="config" />
+        <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${druid.publickey}" />
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="com.isea533.ssm.model" />
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=mysql
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+
+	<!-- scan for mappers and let them be autowired -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.zl.checkapi.mysql.dao" />
+	</bean>
+
+	<!-- mysql transaction -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" /><!--注意：此处的数据源要与sqlSessionFactory中的dataSource相同 -->
+	</bean>
+
+	<!--spring @Transactional -->
+	<tx:annotation-driven />
+
+</beans>
