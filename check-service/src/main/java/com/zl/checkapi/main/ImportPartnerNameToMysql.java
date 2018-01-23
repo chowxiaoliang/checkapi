@@ -43,14 +43,35 @@ public class ImportPartnerNameToMysql {
                     String operationId = stringStringMap.get("COLUMN_0");
                     String partnerId = stringStringMap.get("COLUMN_2");
                     String partnerFullName = stringStringMap.get("COLUMN_3");
-                    if(StringUtils.isEmpty(partnerFullName)){
+                    String usrLocation = stringStringMap.get("COLUMN_4");
+                    if(StringUtils.isEmpty(partnerFullName) && StringUtils.isEmpty(usrLocation)){
                         continue;
                     }
                     if(StringUtils.isNotEmpty(operationId) && StringUtils.isNotEmpty(partnerId)){
                         System.out.println("partnerId=>"+partnerId);
                         System.out.println("partnerFullName=>"+partnerFullName);
                         System.out.println("operationId=>"+operationId);
+                        System.out.println("old_usrLocation=>"+usrLocation);
 
+                        if(StringUtils.isNotEmpty(usrLocation)){
+                            usrLocation = usrLocation.trim();
+                        }
+                        if("东区".equals(usrLocation)){
+                            usrLocation = "EAST";
+                        }
+                        if("南区".equals(usrLocation)){
+                            usrLocation = "SOUTH";
+                        }
+                        if("北区".equals(usrLocation)){
+                            usrLocation = "NORTH";
+                        }
+                        if("北京".equals(usrLocation)){
+                            usrLocation = "BJ";
+                        }
+                        if("深圳".equals(usrLocation)){
+                            usrLocation = "SZ";
+                        }
+                        System.out.println("new_usrLocation=>"+usrLocation);
                         UsrPartnerExample usrPartnerExample = new UsrPartnerExample();
                         UsrPartnerExample.Criteria criteria = usrPartnerExample.createCriteria();
                         criteria.andPartnerIdEqualTo(partnerId);
@@ -58,6 +79,7 @@ public class ImportPartnerNameToMysql {
 
                         UsrPartner usrPartner = new UsrPartner();
                         usrPartner.setPartnerFullname(partnerFullName);
+                        usrPartner.setUsrLocation(usrLocation);
                         usrPartnerMapper.updateByExampleSelective(usrPartner, usrPartnerExample);
                         System.out.println("第"+i+"条数据更新完成");
                     }
