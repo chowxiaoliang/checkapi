@@ -13,7 +13,7 @@
     <dubbo:protocol name="rest" port="20880" threads="500" accepts="3000"/>
     <dubbo:protocol name="dubbo" port="21191"/>
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseService" protocol="dubbo"/>
-    <dubbo:reference interface="com.bqs.risk.serviceapi.service.TokenService" id="tokenService" protocol="dubbo"/>
+    <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseService" protocol="rest"/>
     <!-- 异步任务 -->
     <task:annotation-driven executor="asyncExecutor"/>
     <task:executor id="asyncExecutor" pool-size="10"/>
