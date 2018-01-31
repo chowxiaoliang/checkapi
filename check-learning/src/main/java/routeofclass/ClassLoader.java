@@ -1,9 +1,7 @@
 package routeofclass;
 
-import com.zl.checkapi.util.ConfigUtil;
 
-import java.io.File;
-import java.net.URL;
+import util.ConfigUtil;
 
 /**
  * Created by Administrator on 2017/11/20 0020.
