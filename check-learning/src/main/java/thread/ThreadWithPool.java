@@ -5,6 +5,7 @@ import commonbeans.People;
 import threadpool.ThreadPoolUtil;
 
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -41,14 +42,17 @@ public class ThreadWithPool {
 
         threadPoolExecutor.submit(()-> System.out.println(JSONObject.toJSONString(people)));
         threadPoolExecutor.submit(()-> System.out.println(JSONObject.toJSONString(people1)));
-
+        //用future获取值
         Future<Integer> future = threadPoolExecutor.submit(() -> cal(12, 34));
-
-        Future<Integer> future2 = threadPoolExecutor.submit(() -> cal(12, 34));
+        //用futureTask获取值
+        FutureTask<Integer> futureTask = new FutureTask<>(() -> cal(1, 34));
+        threadPoolExecutor.submit(futureTask);
 
         try{
             int finalResult = future.get();
+            int anotherResult = futureTask.get();
             System.out.println(finalResult);
+            System.out.println(anotherResult);
         }catch (Exception e){
             e.printStackTrace();
         }
