@@ -35,7 +35,7 @@ public class ThreadPoolWithDownLatch {
         try{
             logger.debug("the size of pool is=>{}",threadPoolExecutor.getPoolSize());
             countDownLatch.await();
-            //最后关闭线程池，但执行以前提交的任务，不接受新任务
+            //最后关闭线程池，但执行之前提交的任务，不接受新任务
             threadPoolExecutor.shutdown();
             logger.debug("main thread is finished!");
             String fstr1 = future1.get();
