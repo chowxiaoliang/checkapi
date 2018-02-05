@@ -5,30 +5,6 @@ public class FinalSingleBean {
      * 省
      */
     private String province;
-    /**
-     * 市
-     */
-    private String city;
-    /**
-     * 区
-     */
-    private String district;
-    /**
-     * 街道
-     */
-    private String street;
-    /**
-     * 划分码
-     */
-    private String code;
-    /**
-     * 城乡分类码
-     */
-    private String townAndCountryClass;
-    /**
-     * 居委会或村委会
-     */
-    private String rovcommittee;
 
     public String getProvince() {
         return province;
@@ -46,43 +22,69 @@ public class FinalSingleBean {
         this.city = city;
     }
 
-    public String getDistrict() {
-        return district;
+    public String getCounty() {
+        return county;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setCounty(String county) {
+        this.county = county;
     }
 
-    public String getStreet() {
-        return street;
+    public String getTown() {
+        return town;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setTown(String town) {
+        this.town = town;
     }
 
-    public String getCode() {
-        return code;
+    public String getStaticsAreaPartitionCode() {
+        return staticsAreaPartitionCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setStaticsAreaPartitionCode(String staticsAreaPartitionCode) {
+        this.staticsAreaPartitionCode = staticsAreaPartitionCode;
     }
 
-    public String getTownAndCountryClass() {
-        return townAndCountryClass;
+    public String getCityClassificationCode() {
+        return cityClassificationCode;
     }
 
-    public void setTownAndCountryClass(String townAndCountryClass) {
-        this.townAndCountryClass = townAndCountryClass;
+    public void setCityClassificationCode(String cityClassificationCode) {
+        this.cityClassificationCode = cityClassificationCode;
     }
 
-    public String getRovcommittee() {
-        return rovcommittee;
+    public String getVillage() {
+        return village;
     }
 
-    public void setRovcommittee(String rovcommittee) {
-        this.rovcommittee = rovcommittee;
+    public void setVillage(String village) {
+        this.village = village;
     }
+
+    /**
+     * 市
+     */
+
+    private String city;
+    /**
+     * 区
+     */
+    private String county;
+    /**
+     * 街道
+     */
+    private String town;
+    /**
+     * 划分码
+     */
+    private String staticsAreaPartitionCode;
+    /**
+     * 城乡分类码
+     */
+    private String cityClassificationCode;
+    /**
+     * 居委会或村委会
+     */
+    private String village;
 }

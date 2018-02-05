@@ -1,12 +1,12 @@
 package com.zl.checkapi.reptile.service;
 
-import com.alibaba.fastjson.JSONObject;
+import com.zl.checkapi.reptile.citypartition.FinalSingleBean;
 import com.zl.checkapi.reptile.ioutil.ConnectUtil;
+import com.zl.checkapi.reptile.ioutil.WriteToText;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.omg.CORBA.MARSHAL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadpool.ThreadPoolUtil;
@@ -15,17 +15,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhouliang
  */
 public class ProvinceAndCityMain {
 
-    private final Logger logger = LoggerFactory.getLogger(ProvinceAndCityMain.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProvinceAndCityMain.class);
 
     private static final String PREFIX_Url = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2016/";
+
+    private static final Long TIME = 60*1000L;
 
     private final List<String> list1 = new ArrayList<>();
 
@@ -45,16 +49,96 @@ public class ProvinceAndCityMain {
 
     public static void main(String[] args){
 
+        Long start = System.currentTimeMillis();
+
+        CountDownLatch countDownLatch = new CountDownLatch(8);
+
         ProvinceAndCityMain provinceAndCityMain = new ProvinceAndCityMain();
 
-        provinceAndCityMain.getProvinces();
+        provinceAndCityMain.getOrginalProvinces();
 
         ThreadPoolExecutor threadPoolExecutor = ThreadPoolUtil.newIOPool("pcds");
 
-        provinceAndCityMain.getCities();
+        Future<Integer> future1 = threadPoolExecutor.submit(() ->
+        {
+            int result = provinceAndCityMain.getProvinceStruct(provinceAndCityMain.list1, "one");
+            countDownLatch.countDown();
+            return result;
+        });
+
+        Future<Integer> future2 = threadPoolExecutor.submit(() ->
+        {
+            int result = provinceAndCityMain.getProvinceStruct(provinceAndCityMain.list2, "two");
+            countDownLatch.countDown();
+            return result;
+        });
+
+        Future<Integer> future3 = threadPoolExecutor.submit(() ->
+        {
+            int result = provinceAndCityMain.getProvinceStruct(provinceAndCityMain.list3, "three");
+            countDownLatch.countDown();
+            return result;
+        });
+
+        Future<Integer> future4 = threadPoolExecutor.submit(() ->
+        {
+            int result = provinceAndCityMain.getProvinceStruct(provinceAndCityMain.list4, "four");
+            countDownLatch.countDown();
+            return result;
+        });
+
+        Future<Integer> future5 = threadPoolExecutor.submit(() ->
+        {
+            int result = provinceAndCityMain.getProvinceStruct(provinceAndCityMain.list5, "five");
+            countDownLatch.countDown();
+            return result;
+        });
+
+        Future<Integer> future6 = threadPoolExecutor.submit(() ->
+        {
+            int result = provinceAndCityMain.getProvinceStruct(provinceAndCityMain.list6, "six");
+            countDownLatch.countDown();
+            return result;
+        });
+
+        Future<Integer> future7 = threadPoolExecutor.submit(() ->
+        {
+            int result = provinceAndCityMain.getProvinceStruct(provinceAndCityMain.list7, "seven");
+            countDownLatch.countDown();
+            return result;
+        });
+
+        Future<Integer> future8 = threadPoolExecutor.submit(() ->
+        {
+            int result = provinceAndCityMain.getProvinceStruct(provinceAndCityMain.list8, "eight");
+            countDownLatch.countDown();
+            return result;
+        });
+
+        try{
+            countDownLatch.await(1, TimeUnit.HOURS);
+            int size1 = future1.get();
+            int size2 = future2.get();
+            int size3 = future3.get();
+            int size4 = future4.get();
+            int size5 = future5.get();
+            int size6 = future6.get();
+            int size7 = future7.get();
+            int size8 = future8.get();
+            int total = size1+size2+size3+size4+size5+size6+size7+size8;
+            Long end = System.currentTimeMillis();
+            long time = (end-start)/TIME;
+            logger.info("总共{}条记录", total);
+            logger.info("总共耗时{}minutes", time);
+            threadPoolExecutor.shutdown();
+        }catch (Exception e){
+            logger.error("数据获取失败!", e);
+        }
+
+
     }
 
-    private void getProvinces(){
+    private void getOrginalProvinces(){
         List<String> provinceList = new ArrayList(31);
         String mainUrl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2016/index.html";
         Document mainDocument = ConnectUtil.getConnect(mainUrl);
@@ -80,7 +164,7 @@ public class ProvinceAndCityMain {
                     String province = aTdElement.select("a").get(0).html().replace("<br>", "");
                     String orgPath = aTdElement.select("a").attr("href");
                     String finalPath = PREFIX_Url + orgPath;
-                    String finalStr = province +"_"+ finalPath;
+                    String finalStr = finalPath + "_" + province ;
                     provinceList.add(finalStr);
                 }
             }
@@ -111,113 +195,246 @@ public class ProvinceAndCityMain {
                     list8.add(provinceList.get(i));
                 }
             }
-
-            System.out.println(JSONObject.toJSONString(provinceList));
         }
     }
 
-    private void getCities(){
-        List<String> provinceList = list1;
-        //最终结果保存
-        Map<String, List<Map<String, List<Map<String, List<Map<String, List<String>>>>>>>> resultMap = new HashMap<>();
-        for(int i= 0;i< provinceList.size();i++){
-            //定义保存市的集合
-            List<Map<String, List<Map<String, List<Map<String, List<String>>>>>>> cityList = new ArrayList<>();
-            //市url保存
-            List<String> cityUrlList = new ArrayList<>();
-            String[] resultStr = provinceList.get(i).split("_");
-            String province = resultStr[0];
-            String provinceUrl = resultStr[1];
-            //将市保存至省
-            resultMap.put(province, cityList);
-            //获取城市相关信息
-            Document cityDocument = ConnectUtil.getConnect(provinceUrl);
-            Elements elements = null;
-            if(cityDocument!=null){
-                elements = cityDocument.select(".citytable");
+    /**
+     * 获取省级数据结构
+     * @param provinceList
+     * @return
+     */
+    public int getProvinceStruct(List<String> provinceList, String num){
+        Map<String, List<String>> provinceMap = new HashMap<>(16);
+        //保存所有的url
+        List<String> urlList = new ArrayList<>();
+        if(provinceList!=null && provinceList.size()>0){
+            for(int i=0;i<provinceList.size();i++){
+                String[] str = provinceList.get(i).split("_");
+                String provinceUrl = str[0];
+                String province = str[1];
+                //保存url-data String类型的数据结构
+                List<String> structList = new ArrayList<>();
+                //获取城市相关信息
+                Document cityDocument = ConnectUtil.getConnect(provinceUrl);
+                Elements elements = null;
+                if(cityDocument!=null){
+                    elements = cityDocument.select(".citytable");
+                }
+                Elements cityTrElements = null;
+                try{
+                    cityTrElements = elements.get(0).select(".citytr");
+                }catch (Exception e){
+                    logger.error("获取数据失败=>{},url=>{}", elements.get(0), provinceUrl, e);
+                }
+
+                for(int j=0;j<cityTrElements.size();j++) {
+                    Element element = cityTrElements.get(j);
+                    Elements tdElements = element.getElementsByTag("td");
+                    //第二条数据才是最终结果
+                    Element resultElement = tdElements.get(1).getElementsByTag("a").get(0);
+                    String cityUrl = resultElement.attr("href");
+                    String finalUrl = PREFIX_Url + cityUrl;
+                    String city = resultElement.text();
+                    String finalStr = finalUrl+"_"+city;
+                    //市url保存
+                    urlList.add(finalStr);
+                    structList.add(finalStr);
+                }
+                //保存省级数据结构
+                provinceMap.put(province, structList);
+                logger.info("province=>{}, structList=>{}", province, structList);
             }
-            Elements cityTrElements = elements.get(0).select(".citytr");
-            for(int j=0;j<cityTrElements.size();j++){
-                Element element = cityTrElements.get(j);
-                Elements tdElements = element.getElementsByTag("td");
-                //第二条数据才是最终结果
-                Element resultElement = tdElements.get(1).getElementsByTag("a").get(0);
-                String cityUrl = resultElement.attr("href");
-                String finalUrl = PREFIX_Url+cityUrl;
-                String city = resultElement.text();
-                //市url保存
-                cityUrlList.add(finalUrl);
-                //定义保存市的map
-                Map<String, List<Map<String, List<Map<String, List<String>>>>>> cityMap = new HashMap<>();
-                //定义保存区的集合
-                List<Map<String, List<Map<String, List<String>>>>> districtList = new ArrayList<>();
-                cityMap.put(city, districtList);
-                cityList.add(cityMap);
+        }
+        return getCityStruct(urlList, provinceMap, num);
+    }
+
+    /**
+     * 获取市级数据结构
+     * @param cityList
+     * @return
+     */
+    public int getCityStruct(List<String> cityList, Map<String, List<String>> provinceMap, String num){
+        Map<String, List<String>> cityMap = new HashMap<>(16);
+        //保存所有的url
+        List<String> urlList = new ArrayList<>();
+        if(cityList!=null && cityList.size()>0){
+            for(int i=0;i<cityList.size();i++){
+                String[] str = cityList.get(i).split("_");
+                String cityUrl = str[0];
+                String city = str[1];
+                //保存url-data String类型的数据结构
+                List<String> structList = new ArrayList<>();
                 //获取区相关信息
-                for(int k=0;k<cityUrlList.size();k++){
-                    //当前市的url
-                    String currentCityUrl = cityUrlList.get(k);
-                    //区url保存
-                    List<String> countyUrlList = new ArrayList<>();
-                    Document districtDocument = ConnectUtil.getConnect(currentCityUrl);
-                    Elements districtElements = null;
-                    if(districtDocument!=null){
-                        districtElements = districtDocument.select(".countytable");
+                Document countyDocument = ConnectUtil.getConnect(cityUrl);
+                Elements districtElements = null;
+                if(countyDocument!=null){
+                    districtElements = countyDocument.select(".countytable");
+                }
+                Element countyElement = null;
+                try{
+                    countyElement = districtElements.get(0);
+                }catch (Exception e){
+                    logger.error("获取数据失败=>{}, url=>{}", districtElements.get(0),cityUrl, e);
+                }
+                Elements countyTrElements = countyElement.select(".countytr");
+                for(int m=0;m<countyTrElements.size();m++) {
+                    Elements countyAElement = countyTrElements.get(m).getElementsByTag("td").get(1).getElementsByTag("a");
+                    if (StringUtils.isEmpty(countyAElement.html())) {
+                        continue;
                     }
-                    Element countyElement = districtElements.select(".countytable").get(0);
-                    Elements countyTrElements = countyElement.select(".countytr");
-                    for(int m=0;m<countyTrElements.size();m++){
-                        Elements countyAElement = countyTrElements.get(m).getElementsByTag("td").get(1).getElementsByTag("a");
-                        if(StringUtils.isEmpty(countyAElement.html())){
-                            continue;
-                        }
-                        String countyUrl = countyAElement.attr("href");
-                        String county = countyAElement.text();
-                        //定义保存区的map
-                        Map<String, List<Map<String, List<String>>>> districtMap = new HashMap<>();
-                        //定义保存街道的集合
-                        List<Map<String, List<String>>> streetList = new ArrayList<>();
-                        districtMap.put(county, streetList);
-                        districtList.add(districtMap);
+                    String countyUrl = countyAElement.attr("href");
+                    String county = countyAElement.text();
+                    int endIndex = cityUrl.lastIndexOf("/");
+                    String finalUrl = cityUrl.substring(0, endIndex + 1) + countyUrl;
+                    String finalStr = finalUrl+"_"+county;
+                    structList.add(finalStr);
+                    urlList.add(finalStr);
+                }
+                cityMap.put(city, structList);
+                logger.info("city=>{}, structList=>{}", city, structList);
+            }
+        }
+        return getCountyStruct(urlList, provinceMap, cityMap, num);
+    }
 
-                        int endIndex = currentCityUrl.lastIndexOf("/");
-                        String finalStrictUrl = currentCityUrl.substring(0, endIndex+1)+countyUrl;
-                        System.out.println(finalStrictUrl);
-                        countyUrlList.add(finalStrictUrl);
-
-                        //获取街道相关信息
-                        for(int n=0;n<countyUrlList.size();n++){
-                            //当前街道的url
-                            String currentDistrictUrl = countyUrlList.get(n);
-                            //街道url保存
-                            List<String> streetUrlList = new ArrayList<>();
-                            Document streetDocument = ConnectUtil.getConnect(currentDistrictUrl);
-                            Elements streetElements = null;
-                            if(streetDocument!=null){
-                                streetElements = streetDocument.select(".towntable");
-                            }
-                            Element streetElement = streetElements.select(".towntable").get(0);
-                            Elements streetTrElement = streetElement.select(".towntr");
-                            for(int x=0;x<streetTrElement.size();x++){
-                                Elements streetTdElemnts = streetTrElement.get(x).getElementsByTag("td").get(1).getElementsByTag("a");
-                                if(StringUtils.isEmpty(streetTdElemnts.html())){
-                                    continue;
-                                }
-                                String streetUrl = streetTdElemnts.attr("href");
-                                String street = streetTdElemnts.text();
-                                //定义保存街道的map
-                                Map<String, List<String>> streetMap = new HashMap<>();
-                                //定义保存居委会或村委会的集合
-                                List<String> rvList = new ArrayList<>();
-                                streetMap.put(street, rvList);
-                                streetList.add(streetMap);
-                            }
-                        }
+    /**
+     * 获取县级相关数据
+     * @param countyList
+     * @return
+     */
+    public int getCountyStruct(List<String> countyList, Map<String, List<String>> provinceMap, Map<String, List<String>> cityMap, String num){
+        Map<String, List<String>> countyMap = new HashMap<>(16);
+        //保存所有的url
+        List<String> urlList = new ArrayList<>();
+        if(countyList!=null && countyList.size()>0){
+            for(int i=0;i<countyList.size();i++){
+                String[] str = countyList.get(i).split("_");
+                String countyUrl = str[0];
+                String county = str[1];
+                //保存url-data String类型的数据结构
+                List<String> structList = new ArrayList<>();
+                Document streetDocument = ConnectUtil.getConnect(countyUrl);
+                Elements streetElements = null;
+                if(streetDocument!=null){
+                    streetElements = streetDocument.select(".towntable");
+                }
+                Element streetElement = null;
+                try{
+                    streetElement = streetElements.get(0);
+                }catch (Exception e){
+                    logger.error("获取数据失败=>{}, url=>{}", streetElements.get(0),countyUrl, e);
+                }
+                Elements streetTrElement = streetElement.select(".towntr");
+                for(int x=0;x<streetTrElement.size();x++) {
+                    Elements streetTdElemnts = streetTrElement.get(x).getElementsByTag("td").get(1).getElementsByTag("a");
+                    if (StringUtils.isEmpty(streetTdElemnts.html())) {
+                        continue;
                     }
+                    String streetUrl = streetTdElemnts.attr("href");
+                    String street = streetTdElemnts.text();
+                    int endIndex = countyUrl.lastIndexOf("/");
+                    String finalUrl = countyUrl.substring(0, endIndex + 1) + streetUrl;
+                    String finalStr = finalUrl+"_"+street;
+                    structList.add(finalStr);
+                    urlList.add(finalStr);
+                }
+                countyMap.put(county, structList);
+                logger.info("county=>{}, structList=>{}", county, structList);
+            }
+        }
+        return getTownStruct(urlList, provinceMap, cityMap, countyMap, num);
+    }
 
+    /**
+     * 获取居委会相关信息
+     * @param townList
+     */
+    public int getTownStruct(List<String> townList, Map<String, List<String>> provinceMap, Map<String, List<String>> cityMap, Map<String, List<String>> countyMap, String num){
+        Map<String, List<String>> townMap = new HashMap<>(16);
+        if(townList!=null && townList.size()>0){
+            for(int i=0;i<townList.size();i++){
+                String[] str = townList.get(i).split("_");
+                String townUrl = str[0];
+                String town = str[1];
+                //保存url-data String类型的数据结构
+                List<String> structList = new ArrayList<>();
+                Document townDocument = ConnectUtil.getConnect(townUrl);
+                Elements townElements = null;
+                if(townDocument!=null){
+                    townElements = townDocument.select(".villagetable");
+                }
+                Element townElement = null;
+                try{
+                    townElement = townElements.get(0);
+                }catch (Exception e){
+                    logger.error("获取数据失败=>{}, url=>{}", townElements.get(0),townUrl, e);
+                }
+                Elements townTrElement = townElement.select(".villagetr");
+                for(int x=0;x<townTrElement.size();x++) {
+                    Elements townTdElemnts = townTrElement.get(x).getElementsByTag("td");
+                    if (StringUtils.isEmpty(townTdElemnts.html())) {
+                        continue;
+                    }
+                    String staticsAreaPartitionCode = townTdElemnts.get(0).text();
+                    String cityClassificationCode = townTdElemnts.get(1).text();
+                    String village = townTdElemnts.get(2).text();
+                    String finalStr = staticsAreaPartitionCode+"_"+cityClassificationCode+"_"+village;
+                    structList.add(finalStr);
+                }
+                townMap.put(town, structList);
+                logger.info("town=>{}, structList=>{}", town, structList);
+            }
+        }
+        //统计所有的数据
+        List<FinalSingleBean> resultList = new ArrayList<>();
+        for(Map.Entry entry : townMap.entrySet()){
+            String keyTown = entry.getKey().toString();
+            List<String> villageList = townMap.get(keyTown);
+            for(int j=0;j<villageList.size();j++){
+                FinalSingleBean finalSingleBean = new FinalSingleBean();
+                String[] str = villageList.get(j).split("_");
+                String staticsAreaPartitionCode = str[0];
+                String cityClassificationCode = str[1];
+                String village = str[2];
+                finalSingleBean.setStaticsAreaPartitionCode(staticsAreaPartitionCode);
+                finalSingleBean.setCityClassificationCode(cityClassificationCode);
+                finalSingleBean.setVillage(village);
+                finalSingleBean.setTown(keyTown);
+
+                //找到county
+                String county = getUpperData(keyTown, countyMap);
+                //找到city
+                String city = getUpperData(county, cityMap);
+                //找到province
+                String province = getUpperData(city, provinceMap);
+                finalSingleBean.setCounty(county);
+                finalSingleBean.setCity(city);
+                finalSingleBean.setProvince(province);
+                resultList.add(finalSingleBean);
+            }
+        }
+        //写数据到文件
+        WriteToText.write(resultList, num+".txt");
+        return resultList.size();
+    }
+
+    /**
+     * 通过value找到相关map的key
+     * @param str
+     * @param goalMap
+     * @return
+     */
+    public String getUpperData(String str, Map<String, List<String>> goalMap){
+        for(Map.Entry entry : goalMap.entrySet()){
+            String key = entry.getKey().toString();
+            List<String> resultList = goalMap.get(key);
+            for(String string : resultList){
+                if(str.equals(string.split("_")[1])){
+                    return key;
                 }
             }
         }
-        System.out.println(JSONObject.toJSONString(resultMap));
+        return null;
     }
+
 }
