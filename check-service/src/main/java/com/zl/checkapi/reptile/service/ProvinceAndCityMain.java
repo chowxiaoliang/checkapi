@@ -220,11 +220,12 @@ public class ProvinceAndCityMain {
                 if(cityDocument!=null){
                     elements = cityDocument.select(".citytable");
                 }
-                Elements cityTrElements = null;
+                Elements cityTrElements ;
                 try{
                     cityTrElements = elements.get(0).select(".citytr");
                 }catch (Exception e){
                     logger.error("获取数据失败=>{},url=>{}", elements.get(0), provinceUrl, e);
+                    continue;
                 }
 
                 for(int j=0;j<cityTrElements.size();j++) {
@@ -270,11 +271,12 @@ public class ProvinceAndCityMain {
                 if(countyDocument!=null){
                     districtElements = countyDocument.select(".countytable");
                 }
-                Element countyElement = null;
+                Element countyElement ;
                 try{
                     countyElement = districtElements.get(0);
                 }catch (Exception e){
                     logger.error("获取数据失败=>{}, url=>{}", districtElements.get(0),cityUrl, e);
+                    continue;
                 }
                 Elements countyTrElements = countyElement.select(".countytr");
                 for(int m=0;m<countyTrElements.size();m++) {
@@ -318,11 +320,12 @@ public class ProvinceAndCityMain {
                 if(streetDocument!=null){
                     streetElements = streetDocument.select(".towntable");
                 }
-                Element streetElement = null;
+                Element streetElement ;
                 try{
                     streetElement = streetElements.get(0);
                 }catch (Exception e){
                     logger.error("获取数据失败=>{}, url=>{}", streetElements.get(0),countyUrl, e);
+                    continue;
                 }
                 Elements streetTrElement = streetElement.select(".towntr");
                 for(int x=0;x<streetTrElement.size();x++) {
@@ -363,11 +366,12 @@ public class ProvinceAndCityMain {
                 if(townDocument!=null){
                     townElements = townDocument.select(".villagetable");
                 }
-                Element townElement = null;
+                Element townElement ;
                 try{
                     townElement = townElements.get(0);
                 }catch (Exception e){
                     logger.error("获取数据失败=>{}, url=>{}", townElements.get(0),townUrl, e);
+                    continue;
                 }
                 Elements townTrElement = townElement.select(".villagetr");
                 for(int x=0;x<townTrElement.size();x++) {
