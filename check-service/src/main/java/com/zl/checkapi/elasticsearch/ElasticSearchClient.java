@@ -1,8 +1,11 @@
 package com.zl.checkapi.elasticsearch;
 
+import com.google.common.net.HostAndPort;
 import com.zl.checkapi.util.ConfigUtil;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,21 +16,28 @@ public class ElasticSearchClient {
 
     private static final Logger LOG = LoggerFactory.getLogger(ElasticSearchClient.class);
 
-    private static Client client = null;
+    private static RestHighLevelClient client = null;
 
-    private static Client getTransportClient(){
-        TransportClient client = null;
+    private static RestHighLevelClient getTransportClient(){
+        RestHighLevelClient client = null;
         try{
-            org.elasticsearch.common.settings.Settings settings = org.elasticsearch.common.settings.Settings.
-                    builder().put("cluster.name", ConfigUtil.getValueByKey("cluster.name"))
-                    .put("client.transport.sniff", ConfigUtil.getValueByKey("es.client.transport.sniff"))
-                    .put("cluster.nodes", ConfigUtil.getValueByKey("cluster.nodes")).build();
-
-            String nodeInfos = ConfigUtil.getValueByKey("cluster.nodes");
-            if(nodeInfos==null || nodeInfos.indexOf(":")<0){
-                LOG.error("配置信息读取失败");
-            }else {
-                client = TransportClient.builder().settings(settings).build();
+            String nodeInfos = ConfigUtil.getValueByKey("new.es.cluster.nodes");
+            LOG.info("elasticsearch 配置参数信息 =>>  " + nodeInfos);
+            if (nodeInfos == null || nodeInfos.indexOf(":") < 0) {
+                throw new IllegalArgumentException("elasticsearch connection config  [cluster.nodes] error");
+            } else {
+                String[] nodeInfosSplit = nodeInfos.split(",");
+                HttpHost[] httpHosts = new HttpHost[nodeInfosSplit.length];
+                for (int i = 0 ; i < nodeInfosSplit.length ; i ++ ){
+                    String nodeInfo = nodeInfosSplit[i];
+                    HostAndPort hap = HostAndPort.fromString(nodeInfo);
+                    HttpHost httpHost = new HttpHost(hap.getHostText(), hap.getPort());
+                    httpHosts[i] = httpHost;
+                }
+                RestClientBuilder builder = RestClient.builder(httpHosts);
+                //1分钟
+                builder.setMaxRetryTimeoutMillis(60000);
+                client = new RestHighLevelClient(builder);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -35,10 +45,12 @@ public class ElasticSearchClient {
         return client;
     }
 
-    public static Client client(){
-        if(client == null){
-            synchronized (ElasticSearchClient.class){
-                client = getTransportClient();
+    public static RestHighLevelClient client() {
+        if (client == null) {
+            synchronized (ElasticSearchClient.class) {
+                if(client == null) {
+                    client = getTransportClient();
+                }
             }
         }
         return client;

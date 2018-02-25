@@ -1,0 +1,353 @@
+update risk_table_config set config_json = '{
+"fieldsGroup": [{
+"cls": "baseInfo",
+"clsName": "基本信息",
+"fieldSet": {
+"partnerId": {
+"fieldName": "商户编号"
+},
+"appId": {
+"fieldName": "应用编号"
+},
+"eventType": {
+"fieldName": "事件类型"
+},
+"occurTime": {
+"fieldName": "事件时间"
+},
+"platform": {
+"fieldName": "产品平台"
+},
+"bizResult": {
+"fieldName": "业务结果"
+}
+}
+}, {
+"cls": "userInfo",
+"clsName": "用户信息",
+"fieldSet": {
+"name": {
+"fieldName": "姓名或昵称"
+},
+"account": {
+"fieldName": "用户账号"
+},
+"mobile": {
+"fieldName": "用户手机号"
+},
+"certNo": {
+"fieldName": "用户身份证号"
+},
+"education": {
+"fieldName": "学历"
+},
+"graduateSchool": {
+"fieldName": "毕业院校名称"
+},
+"graduateCity": {
+"fieldName": "毕业院校城市"
+},
+"marriage": {
+"fieldName": "婚姻状况"
+},
+"address": {
+"fieldName": "用户住址"
+},
+"addressCity": {
+"fieldName": "用户住址所在城市"
+},
+"organization": {
+"fieldName": "用户工作单位名称"
+},
+"email": {
+"fieldName": "用户邮箱"
+},
+"organizationAddress": {
+"fieldName": "用户工作单位地址"
+},
+"mobileCity": {
+"fieldName": "手机号归属城市"
+},
+"certNoAge": {
+"fieldName": "身份证年龄"
+},
+"newMobileSecret": {
+"fieldName": "新修改加密手机号"
+},
+"mobileSecret": {
+"fieldName": "用户加密手机号"
+},
+"certNoSecret": {
+"fieldName": "用户加密身份证号"
+},
+"nameSecret": {
+"fieldName": "用户加密姓名"
+},
+"certNoBefore6": {
+"fieldName": "用户身份证号前6位"
+},
+"mobileBefore7": {
+"fieldName": "用户手机号前7位"
+},
+"organizationPhone": {
+"fieldName": "用户工作单位电话"
+},
+"newMobile": {
+"fieldName": "新修改手机号"
+},
+"openId": {
+"fieldName": "微信用户号"
+},
+"certNoAddress": {
+"fieldName": "身份证地址"
+},
+"emailSuffix": {
+"fieldName": "邮箱后缀"
+},
+"certNoCityCode": {
+"fieldName": "身份证归属城市编码"
+},
+"mobileCityCode": {
+"fieldName": "手机归属城市编码"
+},
+"qq": {
+"fieldName": "QQ号码"
+},
+"certNoCity": {
+"fieldName": "身份证城市"
+},
+"spouseContactsMobile": {
+"fieldName": "用户配偶手机号"
+},
+"parentContactsMobile": {
+"fieldName": "用户父母手机号"
+},
+"contactsMobileSecSecret": {
+"fieldName": "第二联系人加密手机号"
+},
+"contactsMobileSecret": {
+"fieldName": "联系人加密手机号"
+},
+"contactsNameSec": {
+"fieldName": "第二联系人姓名"
+},
+"contactsMobileSec": {
+"fieldName": "第二联系人手机号"
+},
+"spouseName": {
+"fieldName": "用户配偶姓名"
+},
+"parentsName": {
+"fieldName": "用户父母姓名"
+},
+"contactsMobile": {
+"fieldName": "用户联系人手机号"
+},
+"contactsName": {
+"fieldName": "用户联系人姓名"
+}
+}
+}, {
+"cls": "orderInfo",
+"clsName": "订单信息",
+"fieldSet": {
+"deliverName": {
+"fieldName": "收货人姓名"
+},
+"deliverMobileNo": {
+"fieldName": "收货人手机号"
+},
+"deliverAddressStreet": {
+"fieldName": "收货人街道地址"
+},
+"deliverAddressCounty": {
+"fieldName": "收货人县或区"
+},
+"deliverAddressCity": {
+"fieldName": "收货人城市"
+},
+"deliverAddressProvince": {
+"fieldName": "收货人省份"
+},
+"deliverAddressCountry": {
+"fieldName": "收货人国家"
+},
+"orderId": {
+"fieldName": "订单号"
+},
+"items": {
+"fieldName": "商品名称/清单"
+},
+"itemNum": {
+"fieldName": "商品数量"
+},
+"itemAmount": {
+"fieldName": "商品金额"
+}
+}
+}, {
+"cls": "vendorInfo",
+"clsName": "卖家信息",
+"fieldSet": {
+"payeeAccount": {
+"fieldName": "卖家账号"
+},
+"payeeName": {
+"fieldName": "卖家姓名"
+},
+"payeeEmail": {
+"fieldName": "卖家邮箱"
+},
+"payeeMobile": {
+"fieldName": "卖家手机"
+},
+"payeePhone": {
+"fieldName": "卖家座机"
+},
+"payeeIdNumber": {
+"fieldName": "卖家身份证"
+},
+"payeeCardNumber": {
+"fieldName": "卖家银行卡"
+},
+"merchantName": {
+"fieldName": "商户名称"
+},
+"bizLicense": {
+"fieldName": "商户工商注册号"
+},
+"orgCode": {
+"fieldName": "组织机构代码"
+}
+}
+}, {
+"cls": "payInfo",
+"clsName": "支付/交易信息",
+"fieldSet": {
+"payMethod": {
+"fieldName": "支付方式"
+},
+"payAmount": {
+"fieldName": "支付金额"
+},
+"payAccount": {
+"fieldName": "支付卡号"
+},
+"amount": {
+"fieldName": "金额"
+}
+}
+}, {
+"cls": "bankCardInfo",
+"clsName": "银行卡信息",
+"fieldSet": {
+"userBankBin": {
+"fieldName": "BIN卡号"
+},
+"bankCardNo": {
+"fieldName": "银行卡卡号"
+},
+"bankCardType": {
+"fieldName": "银行卡类型"
+},
+"bankCardCode": {
+"fieldName": "银行编码"
+},
+"bankCardName": {
+"fieldName": "银行户名"
+},
+"bankCardMobile": {
+"fieldName": "银行卡预留手机号"
+},
+"creditCardNo": {
+"fieldName": "信用卡卡号"
+},
+"creditCardName": {
+"fieldName": "信用卡户名"
+},
+"creditCardMobile": {
+"fieldName": "信用卡预留手机号"
+},
+"bankCardMobileSecret": {
+"fieldName": "银行卡预留加密手机号"
+}
+}
+}, {
+"cls": "deviceInfo",
+"clsName": "设备环境信息",
+"fieldSet": {
+"gpsAddress": {
+"fieldName": "GPS地址"
+},
+"gpsCounty": {
+"fieldName": "GPS区县"
+},
+"tokenKey": {
+"fieldName": "tokenKey"
+},
+"gpsStreet": {
+"fieldName": "GPS详细地址"
+},
+"gpsCityCode": {
+"fieldName": "GPS城市编码"
+},
+"ipCityCode": {
+"fieldName": "IP城市编码"
+},
+"ethIp": {
+"fieldName": "内网IP"
+},
+"trueIp": {
+"fieldName": "真实IP"
+},
+"gpsCountry": {
+"fieldName": "GPS国家"
+},
+"ipProvince": {
+"fieldName": "IP省份"
+},
+"gpsProvince": {
+"fieldName": "GPS省份"
+},
+"userAgent": {
+"fieldName": "用户浏览器UA"
+},
+"ipCity": {
+"fieldName": "IP城市"
+},
+"gpsCity": {
+"fieldName": "GPS城市"
+},
+"deviceId": {
+"fieldName": "设备号"
+},
+"isEmulator": {
+"fieldName": "是否模拟器"
+},
+"latitude": {
+"fieldName": "纬度"
+},
+"longitude": {
+"fieldName": "经度"
+},
+"imei": {
+"fieldName": "IMEI号"
+},
+"mac": {
+"fieldName": "MAC地址"
+},
+"ip": {
+"fieldName": "IP"
+},
+"isRoot": {
+"fieldName": "是否root"
+},
+"deviceModel": {
+"fieldName": "设备型号"
+},
+"internetType": {
+"fieldName": "网络类型"
+}
+}
+}]
+}' where config_type='sys';

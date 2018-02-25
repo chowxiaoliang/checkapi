@@ -105,4 +105,31 @@ public interface Constants {
 		String FEEDBACK_WEB = "01";
 		String FEEDBACK_UNLINE = "02";
 	}
+
+	/**
+	 * 事件历史高级搜索
+	 * eq等于，ne不等于，in包含，not_in不包含，prefix前缀，postfix后缀，lt小于，lte小于等于，gt大于，gte大于等于
+	 */
+	interface EventHistoryTermsType{
+		String EQ = "eq";
+		String NE = "ne";
+		String IN = "in";
+		String NOT_IN = "not_in";
+		String PREFIX = "prefix";
+		String POSTFIX = "postfix";
+		String LT = "lt";
+		String LTE = "lte";
+		String GT = "gt";
+		String GTE = "gte";
+	}
+
+	/**
+	 * 高级搜索前端条件
+	 */
+	interface EventHistoryParams{
+		String EXTRA_CONDITIONS = "extraConditions";
+		String CONDITIONS = "condition";
+		String FIELD_NAME = "fieldName";
+		String FIELD_VALUE = "fieldValue";
+	}
 }
