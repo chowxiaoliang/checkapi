@@ -10,7 +10,7 @@
 
     <dubbo:application name="checkapi" logger="slf4j" owner="programmer" organization="dubbox"/>
     <dubbo:registry address="${dubbo.registry.address}"/>
-    <dubbo:protocol name="rest" port="20881" threads="500" accepts="3000"/>
+    <dubbo:protocol name="rest" port="20881" threads="500" accepts="3000" server="tomcat"/>
     <dubbo:protocol name="dubbo" port="21192"/>
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseService" protocol="dubbo"/>
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseService" protocol="rest"/>
