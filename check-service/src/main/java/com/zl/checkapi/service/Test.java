@@ -1,22 +1,17 @@
 package com.zl.checkapi.service;
 
-import com.bqs.risk.serviceapi.service.TokenService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
-public class Test {
+@Component
+public class Test implements ApplicationContextAware{
 
-    @Autowired
-    private TokenService tokenService;
 
-    public void test(){
-        String params = "{\"partnerId\":\"demo\",\"verifyKey\":\"8eed45f6d6897fa5ce98681d99edc09f\"}";
-        String resultTest = tokenService.getToken(params);
-        System.out.println(resultTest);
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        System.out.println("spring容器加载后就执行这个方法了");
+
     }
-
-    public static void main(String[] args){
-        Test test = new Test();
-        test.test();
-    }
-
 }
