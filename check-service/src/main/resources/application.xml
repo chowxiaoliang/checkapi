@@ -5,7 +5,7 @@
       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
     <!-- 扫描包注解 -->
-    <context:component-scan base-package="com.zl.checkapi"/>
+    <context:component-scan base-package="com.zl.checkapi.*"/>
     <context:property-placeholder location="classpath*:/properties/config.properties" ignore-unresolvable="true" ignore-resource-not-found="true"/>
     <import resource="spring/beans-mybatis.xml"/>
     <import resource="spring/dubbo.xml"/>
