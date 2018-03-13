@@ -18,7 +18,6 @@ public class CheckapiMain {
     }
     public static void main(String[] args){
         LOG.info("["+ new SimpleDateFormat("yyyy-MM-dd : HH:mm:ss").format(new Date())+"] com.zl.checkapi service start...");
-//        ApplicationContext ctx = new ClassPathXmlApplicationContext("application.xml");
         init(args);
     }
     static void init(String[] args){
