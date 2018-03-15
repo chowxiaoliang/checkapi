@@ -13,7 +13,7 @@ public class ThreadTestTwo implements Runnable{
 
     @Override
     public void run() {
-        reentrantLock.lock();
+        reentrantLock.lock() ;
         for(int i=0;i<5;i++){
             try{
                 System.out.println("姓名=>"+name+"第"+i+"次调用");
