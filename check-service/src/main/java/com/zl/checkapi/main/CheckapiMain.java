@@ -1,5 +1,6 @@
 package com.zl.checkapi.main;
 
+import com.alibaba.dubbo.config.ProtocolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,10 +18,15 @@ public class CheckapiMain {
         LOG = LoggerFactory.getLogger(CheckapiMain.class);
     }
     public static void main(String[] args){
+        Runtime.getRuntime().addShutdownHook(new Thread(()->{
+            LOG.info("即将退出服务！");
+            ProtocolConfig.destroyAll();
+            LOG.info("已经退出服务！");
+        }));
         LOG.info("["+ new SimpleDateFormat("yyyy-MM-dd : HH:mm:ss").format(new Date())+"] com.zl.checkapi service start...");
         init(args);
     }
-    static void init(String[] args){
+    private static void init(String[] args){
         com.alibaba.dubbo.container.Main.main(args);
     }
 }

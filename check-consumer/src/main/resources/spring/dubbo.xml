@@ -8,9 +8,9 @@
 
     <dubbo:application name="consumer"/>
 
-    <dubbo:registry id="engineRegistry" protocol="zookeeper" address="${dubbo.registry.address}"/>
+    <dubbo:registry id="engineRegistry" protocol="zookeeper" address="zookeeper://192.168.1.212:2181"/>
 
-    <dubbo:reference id="checkCaseService" interface="com.zl.checkapi.service.CheckCaseService" check="false"/>
+    <dubbo:reference id="checkCaseServiceImpl2" interface="com.zl.checkapi.service.CheckCaseService" check="false" protocol="dubbo"/>
 
 </beans>
 
