@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zl.checkapi.mysql.dao.DictItemMapper" >
+  <resultMap id="BaseResultMap" type="com.zl.checkapi.mysql.domain.DictItem" >
+    <id column="item_id" property="itemId" jdbcType="VARCHAR" />
+    <result column="entry_code" property="entryCode" jdbcType="VARCHAR" />
+    <result column="item_code" property="itemCode" jdbcType="VARCHAR" />
+    <result column="item_value" property="itemValue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    item_id, entry_code, item_code, item_value
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zl.checkapi.mysql.domain.DictItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from dict_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dict_item
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dict_item
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zl.checkapi.mysql.domain.DictItemExample" >
+    delete from dict_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zl.checkapi.mysql.domain.DictItem" >
+    insert into dict_item (item_id, entry_code, item_code, 
+      item_value)
+    values (#{itemId,jdbcType=VARCHAR}, #{entryCode,jdbcType=VARCHAR}, #{itemCode,jdbcType=VARCHAR}, 
+      #{itemValue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zl.checkapi.mysql.domain.DictItem" >
+    insert into dict_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="entryCode != null" >
+        entry_code,
+      </if>
+      <if test="itemCode != null" >
+        item_code,
+      </if>
+      <if test="itemValue != null" >
+        item_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="entryCode != null" >
+        #{entryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null" >
+        #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemValue != null" >
+        #{itemValue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zl.checkapi.mysql.domain.DictItemExample" resultType="java.lang.Integer" >
+    select count(*) from dict_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dict_item
+    <set >
+      <if test="record.itemId != null" >
+        item_id = #{record.itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entryCode != null" >
+        entry_code = #{record.entryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemCode != null" >
+        item_code = #{record.itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemValue != null" >
+        item_value = #{record.itemValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dict_item
+    set item_id = #{record.itemId,jdbcType=VARCHAR},
+      entry_code = #{record.entryCode,jdbcType=VARCHAR},
+      item_code = #{record.itemCode,jdbcType=VARCHAR},
+      item_value = #{record.itemValue,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zl.checkapi.mysql.domain.DictItem" >
+    update dict_item
+    <set >
+      <if test="entryCode != null" >
+        entry_code = #{entryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null" >
+        item_code = #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemValue != null" >
+        item_value = #{itemValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zl.checkapi.mysql.domain.DictItem" >
+    update dict_item
+    set entry_code = #{entryCode,jdbcType=VARCHAR},
+      item_code = #{itemCode,jdbcType=VARCHAR},
+      item_value = #{itemValue,jdbcType=VARCHAR}
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+</mapper>
