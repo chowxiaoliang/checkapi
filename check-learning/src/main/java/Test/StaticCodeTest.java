@@ -7,7 +7,10 @@ public class StaticCodeTest {
     public StaticCodeTest(){
         System.out.println("this is contructor area");
     }
+    public static void sayMessage(){
+        System.out.println("this is say message");
+    }
     public static void main(String[] args){
-        StaticCodeTest staticCodeTest = new StaticCodeTest();
+        StaticCodeTest.sayMessage();
     }
 }

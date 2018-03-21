@@ -9,4 +9,5 @@
     <context:property-placeholder location="classpath*:/properties/config.properties" ignore-unresolvable="true" ignore-resource-not-found="true"/>
     <import resource="spring/beans-mybatis.xml"/>
     <import resource="spring/dubbo.xml"/>
+    <import resource="spring/task.xml"/>
 </beans>

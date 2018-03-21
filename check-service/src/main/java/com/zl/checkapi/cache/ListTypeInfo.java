@@ -1,15 +1,15 @@
 package com.zl.checkapi.cache;
 
 import com.zl.checkapi.pojo.CertNOToStarRule;
-import org.I0Itec.zkclient.ZkLock;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+@Component
 public class ListTypeInfo {
     /**
      * 一级分类
@@ -30,11 +30,16 @@ public class ListTypeInfo {
     /**
      * 身份证转*号的转换规则
      */
-    private List<CertNOToStarRule> certNoToStarRultList = new ArrayList<>();
+    private List<CertNOToStarRule> certNoToStarRuleList = new ArrayList<>();
     /**
      * 读写互斥锁
      */
     private ReentrantReadWriteLock reentrantLock = new ReentrantReadWriteLock();
+
+    public String getAllInfo(){
+        return String.format("fstType=%s, secType=%s, relationCode=%s, certNoToStarList=%s, certNoToStarRuleList=%s",
+                fstType, secType, relationCode, certNoToStarList, certNoToStarRuleList);
+    }
 
 
     public List<String> getFstType() {
@@ -89,17 +94,17 @@ public class ListTypeInfo {
         this.certNoToStarList = certNoToStarList;
     }
 
-    public List<CertNOToStarRule> getCertNoToStarRultList() {
+    public List<CertNOToStarRule> getCertNoToStarRuleList() {
         try{
             reentrantLock.readLock().lock();
-            return certNoToStarRultList;
+            return certNoToStarRuleList;
         }finally {
             reentrantLock.readLock().unlock();
         }
     }
 
-    public void setCertNoToStarRultList(List<CertNOToStarRule> certNoToStarRultList) {
-        this.certNoToStarRultList = certNoToStarRultList;
+    public void setCertNoToStarRuleList(List<CertNOToStarRule> certNoToStarRuleList) {
+        this.certNoToStarRuleList = certNoToStarRuleList;
     }
 
     public ReentrantReadWriteLock getReentrantLock() {
