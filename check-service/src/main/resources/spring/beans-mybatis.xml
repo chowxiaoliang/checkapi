@@ -11,15 +11,15 @@
 
 	<!--redisCluster-->
 	<bean id="redisOperatorJedisCluster" class="com.zl.checkapi.redis.RedisOperatorJedisCluster">
-		<constructor-arg name="ip" value="${redisindex.jediscluster.ip}"></constructor-arg>
-		<constructor-arg name="port" value="${redisindex.jediscluster.port}"></constructor-arg>
-		<constructor-arg name="maxTotal" value="${redisindex.jediscluster.pool.maxTotal}"></constructor-arg>
-		<constructor-arg name="maxIdle" value="${redisindex.jediscluster.pool.maxIdle}"></constructor-arg>
-		<constructor-arg name="maxWaitMillis" value="${redisindex.jediscluster.pool.maxWaitMillis}"></constructor-arg>
-		<constructor-arg name="strTestOnIdle" value="${redisindex.jediscluster.pool.testOnIdle}"></constructor-arg>
-		<constructor-arg name="timeCheckIdle" value="${redisindex.jediscluster.pool.timeCheckIdle}"></constructor-arg>
-		<constructor-arg name="idleTimeout" value="${redisindex.jediscluster.pool.idleTimeout}"></constructor-arg>
-		<constructor-arg name="numTestsPerEvictionRun" value="${redisindex.jediscluster.pool.numTestsPerEvictionRun}"></constructor-arg>
+		<constructor-arg name="ip" value="${redisindex.jediscluster.ip}"/>
+		<constructor-arg name="port" value="${redisindex.jediscluster.port}"/>
+		<constructor-arg name="maxTotal" value="${redisindex.jediscluster.pool.maxTotal}"/>
+		<constructor-arg name="maxIdle" value="${redisindex.jediscluster.pool.maxIdle}"/>
+		<constructor-arg name="maxWaitMillis" value="${redisindex.jediscluster.pool.maxWaitMillis}"/>
+		<constructor-arg name="strTestOnIdle" value="${redisindex.jediscluster.pool.testOnIdle}"/>
+		<constructor-arg name="timeCheckIdle" value="${redisindex.jediscluster.pool.timeCheckIdle}"/>
+		<constructor-arg name="idleTimeout" value="${redisindex.jediscluster.pool.idleTimeout}"/>
+		<constructor-arg name="numTestsPerEvictionRun" value="${redisindex.jediscluster.pool.numTestsPerEvictionRun}"/>
 	</bean>
 	<!--mongodb-->
 	<bean id="mongodbConfig" class="com.zl.checkapi.mongodb.MongodbConfig">
