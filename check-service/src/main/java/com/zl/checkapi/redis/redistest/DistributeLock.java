@@ -32,7 +32,7 @@ class DistributeLock {
     boolean trylock(){
         try{
             if(StringUtils.isEmpty(lockName)){
-                logger.error("lockName should not be null");
+                logger.error("lockName should not be empty");
                 return false;
             }
             long result = jedisCluster.setnx(lockName, getLockVal(lockName, timeUnit, expireTime));
@@ -43,7 +43,8 @@ class DistributeLock {
                 if(System.currentTimeMillis() > lastTimeMillis){
                     //死锁 删除key 解除锁
                     unlock(lockName);
-                    jedisCluster.setnx(lockName, getLockVal(lockName, timeUnit, expireTime));
+                    //重新上锁
+                    jedisCluster.setex(lockName, (int)timeUnit.toSeconds(expireTime), getLockVal(lockName, timeUnit, expireTime));
                     return true;
                 }
             }
@@ -60,7 +61,7 @@ class DistributeLock {
 
     private void unlock(String lockName){
         if(StringUtils.isEmpty(lockName)){
-            logger.error("lockName should not be null");
+            logger.error("lockName should not be empty");
             return;
         }
         jedisCluster.del(lockName);
@@ -75,7 +76,7 @@ class DistributeLock {
      */
     private String getLockVal(String lockName, TimeUnit timeUnit, Long expireTime){
         if (StringUtils.isEmpty(lockName)) {
-            logger.error("lockName should not be null");
+            logger.error("lockName should not be empty");
             return null;
         }
         return lockName +":" + System.currentTimeMillis() + timeUnit.toMillis(expireTime);
