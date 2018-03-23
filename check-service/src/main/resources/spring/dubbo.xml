@@ -14,6 +14,7 @@
     <dubbo:protocol name="dubbo" port="21192"/>
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseServiceImpl2" protocol="dubbo"/>
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseService" protocol="rest"/>
+    <dubbo:service interface="com.zl.checkapi.service.DataFromRedisService" ref="dataFromRedisService" protocol="rest"/>
     <!-- 异步任务 -->
     <task:annotation-driven executor="asyncExecutor"/>
     <task:executor id="asyncExecutor" pool-size="10"/>

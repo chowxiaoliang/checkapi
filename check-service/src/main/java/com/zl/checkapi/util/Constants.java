@@ -132,4 +132,9 @@ public interface Constants {
 		String FIELD_NAME = "fieldName";
 		String FIELD_VALUE = "fieldValue";
 	}
+
+	interface Redis{
+		String SET = "set";
+		String GET = "get";
+	}
 }

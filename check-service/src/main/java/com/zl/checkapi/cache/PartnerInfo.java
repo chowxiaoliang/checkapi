@@ -36,7 +36,7 @@ public class PartnerInfo implements ApplicationContextAware {
         this.refreshData();
     }
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     /**
      * 每分钟刷新一次
      */

@@ -21,10 +21,10 @@ public class ZhiMaFeedBack {
 
             JSONObject extParam = new JSONObject();
             extParam.put("fileCharset", "UTF-8");
-            extParam.put("records", "31020");
+            extParam.put("records", "11515");
             extParam.put("primaryKeyColumns","order_no");
             extParam.put("bizExtParams","");
-            extParam.put("file", ZhiMaFeedBack.toByteArray3("F:\\github\\checkapi\\check-service\\src\\main\\resources\\files\\芝麻返回详细数据20171128(4).json"));
+            extParam.put("file", ZhiMaFeedBack.toByteArray3("F:\\github\\checkapi\\check-service\\src\\main\\resources\\files\\芝麻返回详细数据20180225.json"));
             extParam.put("columns","biz_date,linked_merchant_id，user_credentials_type,user_credentials_no,user_name,order_no,scene_type,scene_desc,scene_status,create_amt,installment_due_date,overdue_amt,gmt_ovd_date,rectify_flag,memo");
             req.put("extParam", extParam);
 

@@ -1,9 +1,11 @@
 package com.zl.checkapi.service;
 
+import com.alibaba.dubbo.container.spring.SpringContainer;
 import com.zl.checkapi.designmodel.DataObject;
 import com.zl.checkapi.designmodel.DataObjectFactory;
 import com.zl.checkapi.designmodel.consumedata.CompanyFactoryConsume;
 import com.zl.checkapi.designmodel.consumedata.PeopleFactoryConsume;
+import com.zl.checkapi.redis.RedisOperatorJedisCluster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class CheckCaseServicesImpl implements CheckCaseService{
         LOG.info("request param is :"+req);
         DataObject dataObject = peopletFactoryConsume.getData("people");
         dataObject.processData();
+        RedisOperatorJedisCluster redisOperatorJedisCluster = SpringContainer.getContext().getBean("redisOperatorJedisCluster", RedisOperatorJedisCluster.class);
+        String ip = redisOperatorJedisCluster.getIp();
+        System.out.println("ip=>" + ip);
         return "success";
     }
 }

@@ -5,6 +5,6 @@
 
     <bean id="readListTypeJob" class="com.zl.checkapi.task.ReadListTypeJob"/>
     <task:scheduled-tasks>
-        <task:scheduled ref="readListTypeJob" method="load" cron="0 0/2 * * * ?"/>
+        <task:scheduled ref="readListTypeJob" method="load" cron="0 0/5 * * * ?"/>
     </task:scheduled-tasks>
 </beans>
