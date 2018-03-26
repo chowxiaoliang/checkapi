@@ -18,8 +18,12 @@ public class SpringAopTest {
     @After(value = "execution(* com.zl.checkapi.service..*.*(..))")
     public void logMethod(JoinPoint joinPoint){
         logger.info("enter aop method");
-        String str = String.valueOf(joinPoint.getArgs()[0]);
-        System.out.println(str);
+        if(joinPoint.getArgs().length>0){
+            String str = String.valueOf(joinPoint.getArgs()[0]);
+            System.out.println(str);
+        }else{
+            logger.info("no params exist!");
+        }
         logger.info("exit aop method");
     }
 
