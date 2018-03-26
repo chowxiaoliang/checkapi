@@ -84,6 +84,21 @@
 		<property name="dataSource" ref="dataSource" /><!--注意：此处的数据源要与sqlSessionFactory中的dataSource相同 -->
 	</bean>
 
+	<!--aop transaction-->
+	<tx:advice transaction-manager="transactionManager" id="txAdvice">
+		<tx:attributes>
+			<tx:method name="get*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut expression="execution (* com.zl.service..*.*(..))" id="checkService"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="checkService"/>
+	</aop:config>
 	<!--spring @Transactional -->
 	<tx:annotation-driven />
 
