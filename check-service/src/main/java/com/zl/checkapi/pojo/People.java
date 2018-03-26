@@ -20,6 +20,11 @@ public class People {
         this.name = "json";
     }
 
+    public String sayMessage(){
+        System.out.println("the address is "+address+",the certNo is "+certNo+",the mobile is "+mobile+",the name is "+name);
+        return "baseInfo is printed successfully";
+    }
+
     public String getCertNo() {
         return certNo;
     }
