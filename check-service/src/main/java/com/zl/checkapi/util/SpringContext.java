@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author zhouliang
- * @param <T>
+ * @param 
  */
 @Component
-public class SpringContext<T> implements ApplicationContextAware {
+public class SpringContext implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
     public SpringContext(){
     }
