@@ -3,6 +3,7 @@ package thread.threadwithreentrantlock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -28,15 +29,69 @@ public class ConditionTest {
 
         final NumberWraper numberWraper = new NumberWraper();
         new Thread(()->{
-            while (numberWraper.value<4){
-                try {
-                    logger.info("thread a is waiting...value=>{}", numberWraper.value);
+            //需要先获得锁(先输出1,2,3)
+            reentrantLock.lock();
+            try {
+                while (numberWraper.value<4){
+                    //A线程先输出前三个
+                    logger.info("thread A is increasing...value=>{}", numberWraper.value);
                     numberWraper.value ++ ;
-                    reachThree.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    TimeUnit.SECONDS.sleep(1);
                 }
+                //要输出4,5,6时通知B线程可以开始了
+                reachThree.signal();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }finally {
+                reentrantLock.unlock();
             }
-        })
+            //再次获得锁(7,8,9)
+            reentrantLock.lock();
+            try{
+                //等待输出4,5,6
+                reachSix.await();
+                logger.info("thread A is going to write value=>{}", numberWraper.value);
+                //收到通知输出7,8,9
+                while(numberWraper.value<10){
+                    logger.info("thread A is increasing...value=>{}", numberWraper.value);
+                    numberWraper.value++;
+                }
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }finally {
+                reentrantLock.unlock();
+            }
+
+        }).start();
+        new Thread(()->{
+            reentrantLock.lock();
+            try{
+                while(numberWraper.value<4){
+                    logger.info("thread B is waiting...value=>{}" ,numberWraper.value);
+                    TimeUnit.SECONDS.sleep(1);
+                    reachThree.await();
+                }
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }finally {
+                reentrantLock.unlock();
+            }
+            //收到输出4,5,6的信号
+            reentrantLock.lock();
+            try {
+                logger.info("thread B is going to write");
+                while (numberWraper.value<7){
+                    logger.info("thread B is increasing...value=>{}", numberWraper.value);
+                    numberWraper.value++;
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                //通知线程A可以开始了
+                reachSix.signal();
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }finally {
+                reentrantLock.unlock();
+            }
+        }).start();
     }
 }
