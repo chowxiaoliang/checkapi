@@ -40,6 +40,7 @@ public class UpdateFinanceType {
 
     public static void main(String[] args){
         String filePath = "/app/partner_finance.xlsx";
+//        String filePath = "C:\\Users\\lenovo\\Desktop\\partner_finance.xlsx";
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application.xml");
         logger.info("spring容器已经启动， 等待15s后开始清洗数据");
 
@@ -59,7 +60,7 @@ public class UpdateFinanceType {
             logger.error("Excel解析异常", e);
         }
         assert map != null;
-        List<Map<String, String>> list = map.get("sqlResult_1743099");
+        List<Map<String, String>> list = map.get("Sheet1");
 
         if(list!=null && list.size()>0){
             logger.info("本次更新的数据量大小是=>{}", list.size());
@@ -67,7 +68,7 @@ public class UpdateFinanceType {
                 try{
                     logger.info("开始清洗第{}条数据", i);
                     Map<String, String> innerMap = list.get(i);
-                    String partnerId = innerMap.get("COLUMN_1");
+                    String partnerId = innerMap.get("COLUMN_0");
                     String financeType = innerMap.get("COLUMN_6");
                     if(StringUtils.isEmpty(partnerId) || StringUtils.isEmpty(financeType)){
                         logger.info("跳过该条记录=>partnerId=>{},financtType=>{}", partnerId, financeType);
@@ -97,16 +98,24 @@ public class UpdateFinanceType {
                         int status = usrPartner1.getStatus();
 
                         Partner partner = new Partner(partnerId, operationId, String.valueOf(partnerStatus), String.valueOf(status), partnerName, financeType, null);
-
-                        Response response = hbaseUtilService.upsertPartner(UpdateFinanceType.getCommonLog(partnerId), partner);
-                        if("1".equals(response.getQueryCode())){
-                            logger.info("数据更新通知Hbase成功=>partnerId={}", partnerId);
+                        try{
+                            Response response = hbaseUtilService.upsertPartner(UpdateFinanceType.getCommonLog(partnerId), partner);
+                            if("1".equals(response.getQueryCode())){
+                                logger.info("数据更新通知Hbase成功=>partnerId={}", partnerId);
+                            }else{
+                                logger.info("数据更新通知Hbase失败=>partnerId={}", partnerId);
+                            }
+                        }catch (Exception e){
+                            logger.error("数据更新通知Hbase异常partnerId=>{}", partnerId, e);
                         }
+
                     }
                 }catch (Exception e){
-                    logger.error("清洗数据异常}", e);
+                    logger.error("清洗数据异常", e);
                 }
             }
         }
+        logger.info("数据清洗结束,正退出...");
+        System.exit(0);
     }
 }
