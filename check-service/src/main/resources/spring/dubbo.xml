@@ -9,8 +9,9 @@
       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <dubbo:application name="checkapi" logger="slf4j" owner="programmer" organization="dubbox"/>
-    <dubbo:registry address="${dubbo.registry.address}"/>
-    <dubbo:protocol name="rest" port="20881" threads="500" accepts="3000" server="tomcat"/>
+    <!--注册中心用zookeeper 协议用zookeeper-->
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}"/>
+    <dubbo:protocol name="rest" port="20881" threads="500" accepts="3000" server="tomcat" />
     <!--<dubbo:protocol name="dubbo" port="20883"/>-->
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseServiceImpl2" protocol="dubbo"/>
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseService" protocol="rest"/>
