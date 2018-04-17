@@ -21,7 +21,7 @@ public class ElasticSearchClient {
     private static RestHighLevelClient getTransportClient(){
         RestHighLevelClient client = null;
         try{
-            String nodeInfos = ConfigUtil.getValueByKey("new.es.cluster.nodes");
+            String nodeInfos = ConfigUtil.getValueByKey("cluster.nodes");
             LOG.info("elasticsearch 配置参数信息 =>>  " + nodeInfos);
             if (nodeInfos == null || nodeInfos.indexOf(":") < 0) {
                 throw new IllegalArgumentException("elasticsearch connection config  [cluster.nodes] error");
