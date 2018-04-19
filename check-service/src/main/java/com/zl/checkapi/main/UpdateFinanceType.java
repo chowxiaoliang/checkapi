@@ -40,7 +40,7 @@ public class UpdateFinanceType {
 
     public static void main(String[] args){
         String filePath = "/app/partner_finance.xlsx";
-//        String filePath = "C:\\Users\\lenovo\\Desktop\\partner_finance.xlsx";
+//        String filePath = "C:\\Users\\lenovo\\Desktop\\partner_finance(1).xlsx";
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application.xml");
         logger.info("spring容器已经启动， 等待15s后开始清洗数据");
 
