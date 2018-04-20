@@ -37,6 +37,6 @@ public class ConditionTest {
                     e.printStackTrace();
                 }
             }
-        })
+        }).start();
     }
 }
