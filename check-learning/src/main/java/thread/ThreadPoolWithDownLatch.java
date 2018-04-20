@@ -7,6 +7,7 @@ import threadpool.ThreadPoolUtil;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhouliang
@@ -34,9 +35,13 @@ public class ThreadPoolWithDownLatch {
         });
         try{
             logger.debug("the size of pool is=>{}",threadPoolExecutor.getPoolSize());
-            countDownLatch.await();
             //最后关闭线程池，但执行之前提交的任务，不接受新任务
             threadPoolExecutor.shutdown();
+            do{
+                logger.info("等待缓冲队列里面线程执行完成=>queue size is => "+threadPoolExecutor.getQueue().size());
+                TimeUnit.SECONDS.sleep(1);
+            }while (threadPoolExecutor.getQueue().size()>0);
+            countDownLatch.await();
             logger.debug("main thread is finished!");
             String fstr1 = future1.get();
             String fstr2 = future2.get();

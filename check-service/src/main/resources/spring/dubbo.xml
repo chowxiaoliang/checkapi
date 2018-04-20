@@ -9,13 +9,15 @@
       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <dubbo:application name="checkapi" logger="slf4j" owner="programmer" organization="dubbox"/>
-    <dubbo:registry address="${dubbo.registry.address}"/>
-    <dubbo:protocol name="rest" port="20881" threads="500" accepts="3000" server="tomcat"/>
-    <dubbo:protocol name="dubbo" port="21192"/>
+    <!--注册中心用zookeeper 协议用zookeeper-->
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}"/>
+    <dubbo:protocol name="rest" port="20881" threads="500" accepts="3000" server="tomcat" />
+    <!--<dubbo:protocol name="dubbo" port="20883"/>-->
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseServiceImpl2" protocol="dubbo"/>
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseService" protocol="rest"/>
     <dubbo:service interface="com.zl.checkapi.service.DataFromRedisService" ref="dataFromRedisService" protocol="rest"/>
     <dubbo:service interface="com.zl.checkapi.service.DistributeLockService" ref="distributeLockServiceImpl" protocol="rest" timeout="3000" retries="0"/>
+    <dubbo:reference id="hbaseUtilService" interface="com.bqs.risk.datamarket.hbaseapi.service.HbaseUtilService" timeout="2000"  check="false"/>
     <!-- 异步任务 -->
     <task:annotation-driven executor="asyncExecutor"/>
     <task:executor id="asyncExecutor" pool-size="10"/>
