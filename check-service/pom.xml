@@ -416,11 +416,6 @@
             <artifactId>jedis</artifactId>
             <version>2.8.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.bqs.risk.datamarket</groupId>
-            <artifactId>hbasequery-api</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
-        </dependency>
         <!--httpClient-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -432,6 +427,12 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
             <version>4.4.4</version>
+        </dependency>
+        <!-- hbase查询接口 -->
+        <dependency>
+            <groupId>com.bqs.risk.datamarket</groupId>
+            <artifactId>hbasequery-api</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
@@ -530,7 +531,7 @@
                     MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAK1XVND/Kwz813BKhEtRR/1f40rYgq+HVM69c2xH797eMa0BBCDCVlXXC/u2GPgoY8uWir1/GODBfW4p/eevmhsCAwEAAQ==
                 </p.connection.publicKey>
                 <p.metadata.broker.list>hadoop7:9092,hadoop8:9092,hadoop9:9092</p.metadata.broker.list>
-                <p.zookeeper.connect>hadoop1:2181,hadoop2:2181,hadoop3:2181</p.zookeeper.connect>
+                <p.zookeeper.connect>hb-j5e517al6xib80rkb-001.hbase.rds.aliyuncs.com:2181,hb-j5e517al6xib80rkb-002.hbase.rds.aliyuncs.com:2181,hb-j5e517al6xib80rkb-003.hbase.rds.aliyuncs.com:2181</p.zookeeper.connect>
                 <p.service.kafka.metadata>hadoop17:9092,hadoop18:9092,hadoop19:9092</p.service.kafka.metadata>
                 <p.service.kafka.zookeeper>hadoop17:2181,hadoop18:2181,hadoop19:2181</p.service.kafka.zookeeper>
                 <p.kafka.topic.engine_to_exchange>engine_to_exchange_decision</p.kafka.topic.engine_to_exchange>

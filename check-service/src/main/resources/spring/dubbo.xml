@@ -17,6 +17,7 @@
     <dubbo:service interface="com.zl.checkapi.service.CheckCaseService" ref="checkCaseService" protocol="rest"/>
     <dubbo:service interface="com.zl.checkapi.service.DataFromRedisService" ref="dataFromRedisService" protocol="rest"/>
     <dubbo:service interface="com.zl.checkapi.service.DistributeLockService" ref="distributeLockServiceImpl" protocol="rest" timeout="3000" retries="0"/>
+    <!--hbase服务-->
     <dubbo:reference id="hbaseUtilService" interface="com.bqs.risk.datamarket.hbaseapi.service.HbaseUtilService" timeout="2000"  check="false"/>
     <!-- 异步任务 -->
     <task:annotation-driven executor="asyncExecutor"/>
