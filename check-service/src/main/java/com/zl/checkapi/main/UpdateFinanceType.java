@@ -42,6 +42,12 @@ public class UpdateFinanceType {
         String filePath = "/app/partner_finance.xlsx";
 //        String filePath = "C:\\Users\\lenovo\\Desktop\\partner_finance(1).xlsx";
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application.xml");
+        Map<String, Integer> countMap = new HashMap<>(16);
+        int count = 0;
+        int successCount = 0;
+        int failCount = 0;
+        countMap.put("success", count);
+        countMap.put("fail", count);
         logger.info("spring容器已经启动， 等待15s后开始清洗数据");
 
         UsrPartnerMapper usrPartnerMapper = applicationContext.getBean(UsrPartnerMapper.class);
@@ -74,7 +80,6 @@ public class UpdateFinanceType {
                         logger.info("跳过该条记录=>partnerId=>{},financtType=>{}", partnerId, financeType);
                         continue;
                     }
-
                     UsrPartnerExample usrPartnerExample = new UsrPartnerExample();
                     UsrPartnerExample.Criteria criteria = usrPartnerExample.createCriteria();
                     criteria.andPartnerIdEqualTo(partnerId);
@@ -99,10 +104,18 @@ public class UpdateFinanceType {
 
                         Partner partner = new Partner(partnerId, operationId, String.valueOf(partnerStatus), String.valueOf(status), partnerName, financeType, null);
                         try{
+                            if(hbaseUtilService==null){
+                                hbaseUtilService = applicationContext.getBean("hbaseUtilService", HbaseUtilService.class);
+                            }
+                            TimeUnit.MILLISECONDS.sleep(100);
                             Response response = hbaseUtilService.upsertPartner(UpdateFinanceType.getCommonLog(partnerId), partner);
                             if("1".equals(response.getQueryCode())){
+                                successCount ++;
+                                countMap.put("success", successCount);
                                 logger.info("数据更新通知Hbase成功=>partnerId={}", partnerId);
                             }else{
+                                failCount ++;
+                                countMap.put("fail", failCount);
                                 logger.info("数据更新通知Hbase失败=>partnerId={}", partnerId);
                             }
                         }catch (Exception e){
@@ -115,6 +128,8 @@ public class UpdateFinanceType {
                 }
             }
         }
+        logger.info(JSONObject.toJSONString(successCount));
+        logger.info(JSONObject.toJSONString(failCount));
         logger.info("数据清洗结束,正退出...");
         System.exit(0);
     }
