@@ -7,6 +7,8 @@ public class JdkProxyTest {
         UserService userService = new UserServiceImpl();
         MyInvocationHandler myInvocationHandler = new MyInvocationHandler(userService);
         UserService proxy = (UserService)myInvocationHandler.getPorxyObject();
+        //生成代理class文件
+        GenerateProxyClass.writeProxyClassToHardDisk("F:/$Proxy11.class");
         proxy.basicInfo("123456789", "yangxiaoxiao", "13227136694");
         proxy.sayMessage("today the weather if nice");
         proxy.toString();
