@@ -9,8 +9,11 @@ import java.util.Date;
  **/
 public class DateAndCalendarTest {
     public static void main(String[] args) {
+        //今天的时间
         Date date = new Date();
+        //昨天开始的时间
         Date start = getStartDate(date);
+        //昨天结束的时间
         Date end = getEndDate(date);
         System.out.println(date);
         System.out.println(start);
