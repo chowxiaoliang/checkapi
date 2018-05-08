@@ -34,6 +34,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ThreadPoolUtil {
 
+    /**
+     * 计算密集型  最佳线程数 cpu数量*2 （一般使用此种）
+     * IO密集型 最佳线程数 cpu数量*(5~10) IO阻塞会浪费cpu
+     */
     private static final int THREAD_CPU_NUM = Runtime.getRuntime().availableProcessors();
 
     private static final int MAX_TASK_NUM = 100_000_000;
