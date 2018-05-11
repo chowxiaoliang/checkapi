@@ -1,0 +1,50 @@
+package thread;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import threadpool.CommonThreadPoolExecutor;
+
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author zhouliang
+ * @since 2018-05-11 14:23
+ **/
+public class ThreadWithCommonPool {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ThreadWithCommonPool.class);
+    private static class NumberWrapper{
+        private volatile int num = 0 ;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        ThreadPoolExecutor threadPoolExecutor = CommonThreadPoolExecutor.newCPUPool("common-thread");
+        NumberWrapper numberWrapper = new NumberWrapper();
+        for(int i=0;i<200000;i++){
+            threadPoolExecutor.submit(()->{
+                synchronized (numberWrapper){
+                    LOGGER.info("the num is => {}", numberWrapper.num);
+                    numberWrapper.num++;
+                }
+            });
+        }
+        threadPoolExecutor.shutdown();
+        do{
+            TimeUnit.MILLISECONDS.sleep(5);
+            LOGGER.info("the size of queue is => {}", threadPoolExecutor.getQueue().size());
+        }while (threadPoolExecutor.getQueue().size()!=0);
+
+        long taskCount ;
+        long completedTaskCount ;
+        do{
+            TimeUnit.MILLISECONDS.sleep(5);
+            taskCount = threadPoolExecutor.getTaskCount();
+            completedTaskCount = threadPoolExecutor.getCompletedTaskCount();
+            LOGGER.info("the task count is => {}", taskCount);
+            LOGGER.info("the completed task count is => {}", completedTaskCount);
+        }while (taskCount!=completedTaskCount);
+
+        LOGGER.info("the final task is finished!");
+
+    }
+}
