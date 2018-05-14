@@ -16,6 +16,7 @@ public class ThreadPoolTest {
         private volatile int value = 0;
     }
     public static void main(String[] args) throws InterruptedException{
+        long startTime = System.currentTimeMillis();
         ThreadPoolExecutor threadPoolExecutor = ThreadPoolUtil.newIOPool("test-pool");
         NumberWraper numberWraper = new NumberWraper();
         for(int i=0;i<20000;i++){
@@ -24,11 +25,6 @@ public class ThreadPoolTest {
                     numberWraper.value++;
                 }
                 logger.info("thread {} executing 第{}次", Thread.currentThread().getName(), numberWraper.value);
-                try {
-                    TimeUnit.MILLISECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             });
         }
         //关闭接收任务，但队列里面的任务会继续处理
@@ -36,7 +32,7 @@ public class ThreadPoolTest {
         do{
             logger.info("waiting thread finished, the size of queue is => {}", threadPoolExecutor.getQueue().size());
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -49,11 +45,11 @@ public class ThreadPoolTest {
         do{
             taskCount = threadPoolExecutor.getTaskCount();
             taskCompletedCount = threadPoolExecutor.getCompletedTaskCount();
-            logger.info("task count is => {}", taskCount);
-            logger.info("completed task count is => {}", taskCompletedCount);
-            TimeUnit.MILLISECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(5);
         }while (taskCount!=taskCompletedCount);
 
         logger.info("all of threads is finished");
+        long endTime = System.currentTimeMillis();
+        logger.info("total time is => {}ms", endTime-startTime);
     }
 }
