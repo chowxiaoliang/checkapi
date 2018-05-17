@@ -31,7 +31,7 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
                 THREAD_CPU_NUM * 4,
                 60L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>(MAX_TASK_NUM),
+                new ArrayBlockingQueue<>(MAX_TASK_NUM),
                 new ThreadPoolUtil.DefaultThreadFactory(threadName),
                 new ThreadPoolExecutor.AbortPolicy());
     }
@@ -41,7 +41,7 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
                 THREAD_CPU_NUM * 8,
                 60L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>(MAX_TASK_NUM),
+                new ArrayBlockingQueue<>(MAX_TASK_NUM),
                 new ThreadPoolUtil.DefaultThreadFactory(threadName),
                 new ThreadPoolExecutor.AbortPolicy()
         );

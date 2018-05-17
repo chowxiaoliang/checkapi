@@ -1,9 +1,6 @@
 package threadpool;
 
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -31,6 +28,30 @@ import java.util.concurrent.atomic.AtomicInteger;
     如果线程池中的线程数量大于 corePoolSize时，如果某线程空闲时间超过keepAliveTime，线程将被终止，直至线程池中的线程数目不大于corePoolSize；如果允许为核心池中的线程设置存活时间，那么核心池中的线程空闲时间超过keepAliveTime，线程也会被终止。
 
     参数allowCoreThreadTimeOut（返回值为布尔）如果设置为true后，当核心线程池里面的线程没有任务提交时，当时间超过keepAliveTime时，里面的线程也会终止
+
+    阻塞队列选用
+    建议使用有界队列，有界队列能增加系统的稳定性和预警能力，可以根据需要设大一点，比如几千。有一次我们组使用的后台任务线程池的队列和线程池全满了，
+    不断的抛出抛弃任务的异常，通过排查发现是数据库出现了问题，导致执行SQL变得非常缓慢，因为后台任务线程池里的任务全是需要向数据库查询和插入数据的，
+    所以导致线程池里的工作线程全部阻塞住，任务积压在线程池里。如果当时我们设置成无界队列，线程池的队列就会越来越多，有可能会撑满内存，导致整个系统不可用，
+    而不只是后台任务出现问题。当然我们的系统所有的任务是用的单独的服务器部署的，而我们使用不同规模的线程池跑不同类型的任务，但是出现这样问题时也会影响到其他任务。
+
+
+    ThreadPoolExecutor线程池执行流程
+
+    根据ThreadPoolExecutor源码前面大段的注释，我们可以看出，当试图通过execute方法将一个Runnable任务添加到线程池中时，按照如下顺序来处理：
+
+    （1）如果线程池中的线程数量少于corePoolSize，就创建新的线程来执行新添加的任务；
+
+    （2）如果线程池中的线程数量大于等于corePoolSize，但队列workQueue未满，则将新添加的任务放到workQueue中，按照FIFO的原则依次等待执行（线程池中有线程空闲出来后依次将队列中的任务交付给空闲的线程执行）；
+
+    （3）如果线程池中的线程数量大于等于corePoolSize，且队列workQueue已满，但线程池中的线程数量小于maximumPoolSize，则会创建新的线程来处理被添加的任务；
+
+    （4）如果线程池中的线程数量等于了maximumPoolSize，就用RejectedExecutionHandler来做拒绝处理
+
+    总结，当有新的任务要处理时，先看线程池中的线程数量是否大于corePoolSize，再看缓冲队列workQueue是否满，最后看线程池中的线程数量是否大于maximumPoolSize
+
+    另外，当线程池中的线程数量大于corePoolSize时，如果里面有线程的空闲时间超过了keepAliveTime，就将其移除线程池
+
  */
 public class ThreadPoolUtil {
 
@@ -56,7 +77,7 @@ public class ThreadPoolUtil {
                 THREAD_CPU_NUM * 4,
                 60L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>(MAX_TASK_NUM),
+                new ArrayBlockingQueue<>(MAX_TASK_NUM),
                 new DefaultThreadFactory(threadName),
                 new ThreadPoolExecutor.AbortPolicy()
         );
@@ -67,7 +88,7 @@ public class ThreadPoolUtil {
                 THREAD_CPU_NUM * 8,
                 60L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>(MAX_TASK_NUM),
+                new ArrayBlockingQueue<>(MAX_TASK_NUM),
                 new DefaultThreadFactory(threadName),
                 new ThreadPoolExecutor.AbortPolicy()
         );
