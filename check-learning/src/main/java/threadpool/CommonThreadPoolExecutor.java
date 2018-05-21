@@ -1,5 +1,8 @@
 package threadpool;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -8,6 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 2018-05-11 11:40
  **/
 public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonThreadPoolExecutor.class);
 
     private static final int THREAD_CPU_NUM = Runtime.getRuntime().availableProcessors();
 
@@ -82,16 +87,16 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
 
     @Override
     protected void beforeExecute(Thread t, Runnable r){
-        System.out.println("任务执行之前=>"+Thread.currentThread().getName());
+
     }
 
     @Override
     protected void afterExecute(Runnable r, Throwable t){
-        System.out.println("任务执行之后=>"+getCorePoolSize());
+
     }
 
     @Override
     protected void terminated(){
-        System.out.println("线程池里面的内容已经执行完毕！");
+
     }
 }
