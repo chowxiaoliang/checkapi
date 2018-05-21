@@ -11,10 +11,11 @@ import java.util.concurrent.locks.LockSupport;
  * @since 2018-05-21 17:39
  * @desc park()挂起 unpark()恢复
  * 与wait和notify的比较：
- * 其实现机制和wait/notify有所不同，面向的是线程。
+ * 其实现机制和wait/notify有所不同，面向的是线程。wait/notify/nofityAll()必须在synchronize代码块里面使用
     不需要依赖监视器
     与wait/notify没有交集
     使用起来更加灵活方便
+    unpark()可以先于park()使用
  **/
 public class LockSupportTest {
 
