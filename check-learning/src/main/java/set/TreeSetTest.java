@@ -35,7 +35,7 @@ public class TreeSetTest {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(TreeSetTest.class);
 
-    private final static Set<Integer> SET = new HashSet<>(16);
+    private final static Set<Integer> SET = new TreeSet<>(16);
 
     public static void main(String[] args) {
 

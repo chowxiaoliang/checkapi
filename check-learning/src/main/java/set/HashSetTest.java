@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadpool.ThreadPoolUtil;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -25,7 +25,7 @@ public class HashSetTest {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(HashSetTest.class);
 
-    private final static Set<Integer> SET = new TreeSet<>();
+    private final static Set<Integer> SET = new HashSet<>();
 
     public static void main(String[] args) {
 
