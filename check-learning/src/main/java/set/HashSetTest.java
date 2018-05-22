@@ -25,7 +25,7 @@ public class HashSetTest {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(HashSetTest.class);
 
-    private final static Set<Integer> SET = new HashSet<>();
+    private final static Set<Integer> SET = new HashSet<>(16);
 
     public static void main(String[] args) {
 
