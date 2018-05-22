@@ -20,6 +20,47 @@ import java.util.concurrent.ThreadPoolExecutor;
     注意，如果要把一个对象放入HashSet中，重写该对象对应类的equals方法，也应该重写其hashCode()方法。其规则是如果两个对象通过equals方法比较返回true时，
     其hashCode也应该相同。另外，对象中用作equals比较标准的属性，都应该用来计算 hashCode的值。
  * @since 2018-05-17 17:54
+ *
+ * 需要考虑的点：
+ * hashSet 和 hashMap
+ * linkedHashSet 和 linkedHashMap
+ * treeSet 和 treeMap
+ * 这三者之间的关系，底层存储结构是否相同，存和取的方式异同点
+ *
+ * HashSet是基于HashMap来实现的，操作很简单，更像是对HashMap做了一次“封装”，而且只使用了HashMap的key来实现各种特性，我们先来感性的认识一下这个结构：
+        HashSet<String> set = new HashSet<String>();
+        set.add("语文");
+        set.add("数学");
+        set.add("英语");
+        set.add("历史");
+        set.add("政治");
+        set.add("地理");
+        set.add("生物");
+        set.add("化学");
+        其大致的结构是这样的：
+
+        private transient HashMap<E,Object> map;
+        // Dummy value to associate with an Object in the backing Map
+        private static final Object PRESENT = new Object();
+        map是整个HashSet的核心，而PRESENT则是用来造一个假的value来用的。
+
+        2. 基本操作
+        public boolean add(E e) {
+        return map.put(e, PRESENT)==null;
+        }
+
+        public boolean remove(Object o) {
+        return map.remove(o)==PRESENT;
+        }
+
+        public boolean contains(Object o) {
+        return map.containsKey(o);
+        }
+
+        public int size() {
+        return map.size();
+        }
+基本操作也非常简单，就是调用HashMap的相关方法，其中value就是之前那个dummy的Object。所以，只要了解#7 HashMap的实现就可以了。
  **/
 public class HashSetTest {
 
