@@ -7,5 +7,12 @@ public class StringTestOne {
         System.out.println(tempStr);
         char test = '量';
         System.out.println(test);
+
+        int i = 0;
+        int j = 0;
+
+        System.out.println(i++);
+        System.out.println(++j);
+        System.out.println(j);
     }
 }
