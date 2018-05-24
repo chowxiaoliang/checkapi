@@ -19,6 +19,8 @@
     <dubbo:service interface="com.zl.checkapi.service.DistributeLockService" ref="distributeLockServiceImpl" protocol="rest" timeout="3000" retries="0"/>
     <!--hbase服务-->
     <dubbo:reference id="hbaseUtilService" interface="com.bqs.risk.datamarket.hbaseapi.service.HbaseUtilService" timeout="2000"  check="false"/>
+    <dubbo:reference id="userMappingService" interface="com.bqs.umapper.api.UserMappingService" check="false"
+                     timeout="100000"/>
     <!-- 异步任务 -->
     <task:annotation-driven executor="asyncExecutor"/>
     <task:executor id="asyncExecutor" pool-size="10"/>

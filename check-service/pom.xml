@@ -434,7 +434,11 @@
             <artifactId>hbasequery-api</artifactId>
             <version>0.0.3-SNAPSHOT</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.bqs.umapper</groupId>
+            <artifactId>umapper-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
