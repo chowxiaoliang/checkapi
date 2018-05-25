@@ -43,7 +43,7 @@ public class ThreadWithCommonPool {
 
         threadPoolExecutor.shutdown();
         do{
-            TimeUnit.SECONDS.sleep(4);
+            TimeUnit.SECONDS.sleep(1);
             LOGGER.info("the size of queue is => {}", threadPoolExecutor.getQueue().size());
         }while (threadPoolExecutor.getQueue().size()!=0);
 
@@ -51,7 +51,7 @@ public class ThreadWithCommonPool {
         long activeCount ;
         long completedTaskCount ;
         do{
-            TimeUnit.SECONDS.sleep(4);
+            TimeUnit.SECONDS.sleep(1);
             taskCount = threadPoolExecutor.getTaskCount();
             activeCount = threadPoolExecutor.getActiveCount();
             completedTaskCount = threadPoolExecutor.getCompletedTaskCount();
@@ -63,12 +63,15 @@ public class ThreadWithCommonPool {
                 long innerEnd ;
                 do{
                     //等待一分钟未执行完成则终止线程
-                    TimeUnit.SECONDS.sleep(5);
+                    TimeUnit.SECONDS.sleep(1);
                     taskCount = threadPoolExecutor.getTaskCount();
                     completedTaskCount = threadPoolExecutor.getCompletedTaskCount();
                     innerEnd = System.currentTimeMillis();
                 }while (taskCount!=completedTaskCount && (innerEnd-innerStart)/(1000*60)<1);
-                future.cancel(true);
+                //future.cancel()取消线程的执行可能会失败
+//                future.cancel(true);
+                threadPoolExecutor.shutdownNow();
+                LOGGER.info("current thread name is => {}", Thread.currentThread().getName());
                 LOGGER.info("interrupted！");
             }
         }while (taskCount!=completedTaskCount);
