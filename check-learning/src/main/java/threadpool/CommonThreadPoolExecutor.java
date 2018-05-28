@@ -112,6 +112,30 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
         return super.submit(wrap(task, clientStack(), Thread.currentThread().getName()));
     }
 
+    private void throwException() throws Exception {
+        throw new Exception("exception occurs in current thread!");
+    }
+
+    @Override
+    public void execute(Runnable command){
+
+    }
+
+    @Override
+    public Future<?> submit(Runnable task) {
+        return null;
+    }
+
+    @Override
+    public <T> Future<T> submit(Callable<T> task) {
+        return null;
+    }
+
+    @Override
+    public <T> Future<T> submit(Runnable task, T result) {
+        return null;
+    }
+
     @Override
     protected void beforeExecute(Thread t, Runnable r){
 
