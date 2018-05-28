@@ -32,6 +32,13 @@ public class ThreadWithCommonPool {
             });
         }
 
+        threadPoolExecutor.submit(()->{
+            int a = 9;
+            int b = 0;
+            int c = a/b;
+            System.out.println(c);
+        });
+
         for(int i=0;i<1;i++){
             future = threadPoolExecutor.submit(()->{
                 while(true){
