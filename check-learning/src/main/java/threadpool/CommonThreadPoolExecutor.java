@@ -89,13 +89,13 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
         return new Exception("Client stack trace!");
     }
     
-    private Runnable wrap(final Runnable task, final Exception clientStack, String clientThreadName){
+    private Runnable wrap(final Runnable task, final Exception clientStack){
         return () -> {
             try{
-                LOGGER.info("thread {} start to run!", clientThreadName);
+                LOGGER.info("thread start to run!");
                 task.run();
             }catch (Exception e){
-                LOGGER.error("error occur in thread {}", clientThreadName);
+                LOGGER.error("error occur in thread");
                 clientStack.printStackTrace();
                 throw e;
             }
@@ -104,31 +104,12 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
 
     @Override
     public void execute(Runnable task){
-        super.execute(wrap(task, clientStack(), Thread.currentThread().getName()));
+        super.execute(wrap(task, clientStack()));
     }
 
     @Override
     public Future<?> submit(Runnable task) {
-        return super.submit(wrap(task, clientStack(), Thread.currentThread().getName()));
-    }
-
-    private void throwException() throws Exception {
-        throw new Exception("exception occurs in current thread!");
-    }
-
-    @Override
-    public void execute(Runnable command){
-
-    }
-
-    @Override
-    public Future<?> submit(Runnable task) {
-        return null;
-    }
-
-    @Override
-    public <T> Future<T> submit(Callable<T> task) {
-        return null;
+        return super.submit(wrap(task, clientStack()));
     }
 
     @Override

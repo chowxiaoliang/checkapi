@@ -32,7 +32,7 @@ public class ThreadWithCommonPool {
             });
         }
 
-        threadPoolExecutor.submit(()->{
+        threadPoolExecutor.execute(()->{
             int a = 9;
             int b = 0;
             int c = a/b;
