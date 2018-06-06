@@ -1,4 +1,4 @@
-package collection.list;
+package collections.list;
 
 import commonbeans.People;
 

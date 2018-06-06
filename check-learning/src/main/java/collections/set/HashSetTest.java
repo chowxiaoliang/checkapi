@@ -1,4 +1,4 @@
-package collection.set;
+package collections.set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,37 +28,37 @@ import java.util.concurrent.ThreadPoolExecutor;
  * 这三者之间的关系，底层存储结构是否相同，存和取的方式异同点
  *
  * HashSet是基于HashMap来实现的，操作很简单，更像是对HashMap做了一次“封装”，而且只使用了HashMap的key来实现各种特性，我们先来感性的认识一下这个结构：
-        HashSet<String> collection.set = new HashSet<String>();
-        collection.set.add("语文");
-        collection.set.add("数学");
-        collection.set.add("英语");
-        collection.set.add("历史");
-        collection.set.add("政治");
-        collection.set.add("地理");
-        collection.set.add("生物");
-        collection.set.add("化学");
+        HashSet<String> collections.set = new HashSet<String>();
+        collections.set.add("语文");
+        collections.set.add("数学");
+        collections.set.add("英语");
+        collections.set.add("历史");
+        collections.set.add("政治");
+        collections.set.add("地理");
+        collections.set.add("生物");
+        collections.set.add("化学");
         其大致的结构是这样的：
 
-        private transient HashMap<E,Object> collection.map;
+        private transient HashMap<E,Object> collections.map;
         // Dummy value to associate with an Object in the backing Map
         private static final Object PRESENT = new Object();
         map是整个HashSet的核心，而PRESENT则是用来造一个假的value来用的。
 
         2. 基本操作
         public boolean add(E e) {
-        return collection.map.put(e, PRESENT)==null;
+        return collections.map.put(e, PRESENT)==null;
         }
 
         public boolean remove(Object o) {
-        return collection.map.remove(o)==PRESENT;
+        return collections.map.remove(o)==PRESENT;
         }
 
         public boolean contains(Object o) {
-        return collection.map.containsKey(o);
+        return collections.map.containsKey(o);
         }
 
         public int size() {
-        return collection.map.size();
+        return collections.map.size();
         }
 基本操作也非常简单，就是调用HashMap的相关方法，其中value就是之前那个dummy的Object。所以，只要了解#7 HashMap的实现就可以了。
  **/
@@ -91,7 +91,7 @@ public class HashSetTest {
 
         LOGGER.info("task is finished!");
 
-        LOGGER.info("size of collection.set is => {}", SET.size());
+        LOGGER.info("size of collections.set is => {}", SET.size());
 
         for(Integer integer : SET){
             LOGGER.info("current data is => {}", integer);

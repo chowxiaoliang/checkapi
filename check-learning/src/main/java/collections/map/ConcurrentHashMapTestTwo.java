@@ -1,4 +1,4 @@
-package collection.map;
+package collections.map;
 
 import org.springframework.util.StringUtils;
 import threadpool.ThreadPoolUtil;

@@ -1,4 +1,4 @@
-package collection.list.lambda;
+package collections.list.lambda;
 
 import com.alibaba.fastjson.JSONObject;
 import commonbeans.People;
@@ -54,7 +54,7 @@ public class JavaFiltersTest {
         //max min
         People resultPeople = peopleList.stream().max(Comparator.comparing(People::getAge)).get();
         System.out.println(resultPeople);
-//        List<People> peopleList3 = peopleList.stream().collection.map(People::getAge).collect;
+//        List<People> peopleList3 = peopleList.stream().collections.map(People::getAge).collect;
 
         Long resultList = testList.stream().filter( str -> str.length()>7).count();
         System.out.println(JSONObject.toJSONString(resultList));

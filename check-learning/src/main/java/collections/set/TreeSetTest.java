@@ -1,4 +1,4 @@
-package collection.set;
+package collections.set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,7 @@ public class TreeSetTest {
         }while (taskCount!=completedTaskCount);
         LOGGER.info("task is finished!");
 
-        LOGGER.info("size of collection.set is => {}", SET.size());
+        LOGGER.info("size of collections.set is => {}", SET.size());
 
         for(Integer integer : SET){
             LOGGER.info("current data is => {}", integer);

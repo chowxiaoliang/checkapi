@@ -1,4 +1,4 @@
-package collection.queue;
+package collections.queue;
 
 import org.junit.Test;
 

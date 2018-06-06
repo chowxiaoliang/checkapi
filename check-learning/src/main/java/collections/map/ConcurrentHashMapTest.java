@@ -1,4 +1,4 @@
-package collection.map;
+package collections.map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +54,7 @@ public class ConcurrentHashMapTest {
 
         LOGGER.info("size of concurrentMap is => {}", CONCURRENT_MAP.size());
 
-        LOGGER.info("size of collection.map is => {}", MAP.size());
+        LOGGER.info("size of collections.map is => {}", MAP.size());
     }
 
     private void test(){

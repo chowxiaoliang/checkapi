@@ -1,4 +1,4 @@
-package collection.list.lambda;
+package collections.list.lambda;
 
 public class LambdaComparableTest {
 
