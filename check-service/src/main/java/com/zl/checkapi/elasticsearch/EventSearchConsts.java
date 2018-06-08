@@ -9,11 +9,11 @@ public class EventSearchConsts {
 
 	public enum SortType {
 		ASC, DESC, NO
-	};
+	}
 
 	public enum EventItem {
 		event,rule,strategy
-	};
+	}
 
 	public enum DateHistogramInterval {
 		HOUR, DAY, WEEK, MONTH, QUARTER
