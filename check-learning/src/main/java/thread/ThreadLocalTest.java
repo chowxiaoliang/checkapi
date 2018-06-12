@@ -10,16 +10,16 @@ import java.util.concurrent.TimeUnit;
  * @desc ThreadLocal应用 必须先set然后get 最后要remove
  * ThreadLocal为变量在每个线程中都创建了一个副本，那么每个线程可以访问自己内部的副本变量
  *首先，ThreadLocal 不是用来解决共享对象的多线程访问问题的，一般情况下，通过
- *ThreadLocal.collection.set() 到线程中的对象是该线程自己使用的对象，其他线程是不需要访问的，
+ *ThreadLocal.collections.set() 到线程中的对象是该线程自己使用的对象，其他线程是不需要访问的，
  *也访问不到的。各个线程中访问的是不同的对象。
  *另外，说ThreadLocal使得各线程能够保持各自独立的一个对象，并不是通过
- *ThreadLocal.collection.set()来实现的，而是通过每个线程中的new 对象 的操作来创建的对象，每个
- *线程创建一个，不是什么对象的拷贝或副本。通过ThreadLocal.collection.set()将这个新创建的对象的
+ *ThreadLocal.collections.set()来实现的，而是通过每个线程中的new 对象 的操作来创建的对象，每个
+ *线程创建一个，不是什么对象的拷贝或副本。通过ThreadLocal.collections.set()将这个新创建的对象的
  *引用保存到各线程的自己的一个map中，每个线程都有这样一个map，执行
  *ThreadLocal.get()时，各线程从自己的map中取出放进去的对象，因此取出来的是各自自己
  *线程中的对象，ThreadLocal实例是作为map的key来使用的。
  *
- *如果ThreadLocal.collection.set()进去的东西本来就是多个线程共享的同一个对象，那么多个线程的ThreadLocal.get()取得的还是这个共享对象本身，还是有并发访问问题。
+ *如果ThreadLocal.collections.set()进去的东西本来就是多个线程共享的同一个对象，那么多个线程的ThreadLocal.get()取得的还是这个共享对象本身，还是有并发访问问题。
  *
  * ThreadLocal不是用来解决对象共享访问问题的，而主要是提供了保持对象的方法和避免参数传递的方便的对象访问方式。归纳了两点：
  * 总结：
