@@ -36,7 +36,7 @@ public class DataFromRedisServiceImpl implements DataFromRedisService {
         RedisOperatorJedisCluster redisOperatorJedisCluster = SpringContainer.getContext().getBean("redisOperatorJedisCluster", RedisOperatorJedisCluster.class);
         JedisCluster jedisCluster = redisOperatorJedisCluster.getJedis();
         if(Constants.Redis.SET.equals(type)){
-            //String(set setex setnx)
+            //String(collections.set setex setnx)
             String a = jedisCluster.set("key:a", "value:a");
             jedisCluster.expire("key:a", 60);
             String b = jedisCluster.setex("key:b", 600, "vaule:b");
@@ -57,17 +57,17 @@ public class DataFromRedisServiceImpl implements DataFromRedisService {
             jedisCluster.zadd("key:h", 2, "zbb");
             jedisCluster.zadd("key:h", 3, "zcc");
             jedisCluster.zadd("key:h", 4, "zdd");
-            logger.info("set result a=>{}", a);
-            logger.info("set result b=>{}", b);
-            logger.info("set result c=>{}", c);
-            logger.info("set result d=>{}", d);
-            logger.info("set result f=>{}", f);
-            logger.info("set result g=>{}", g);
-            logger.info("set result h=>{}", h);
-            return "set success";
+            logger.info("collections.set result a=>{}", a);
+            logger.info("collections.set result b=>{}", b);
+            logger.info("collections.set result c=>{}", c);
+            logger.info("collections.set result d=>{}", d);
+            logger.info("collections.set result f=>{}", f);
+            logger.info("collections.set result g=>{}", g);
+            logger.info("collections.set result h=>{}", h);
+            return "collections.set success";
         }
         if(Constants.Redis.GET.equals(type)){
-            //String(set setex setnx)
+            //String(collections.set setex setnx)
             String a = jedisCluster.get("key:a");
             String b = jedisCluster.get("key:b");
             String c = jedisCluster.get("key:c");
