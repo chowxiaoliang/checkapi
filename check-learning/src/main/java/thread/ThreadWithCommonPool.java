@@ -4,8 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadpool.CommonThreadPoolExecutor;
 
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,33 +18,24 @@ public class ThreadWithCommonPool {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        ThreadPoolExecutor threadPoolExecutor = CommonThreadPoolExecutor.newCPUPool("common-thread");
+        CommonThreadPoolExecutor threadPoolExecutor = CommonThreadPoolExecutor.newCPUPool("common-thread");
         NumberWrapper numberWrapper = new NumberWrapper();
-        Future future = null;
-        for(int i=0;i<10;i++){
-            future = threadPoolExecutor.submit(()->{
-                synchronized (numberWrapper){
-                    LOGGER.info("the num is => {}", numberWrapper.num);
-                    numberWrapper.num++;
-                }
-            });
-        }
-
-        threadPoolExecutor.execute(()->{
-            int a = 9;
+//        for(int i=0;i<10;i++){
+//            threadPoolExecutor.submit(()->{
+//                synchronized (numberWrapper){
+//                    LOGGER.info("the num is => {}", numberWrapper.num);
+//                    numberWrapper.num++;
+//                }
+//            });
+//        }
+        String result = null;
+        threadPoolExecutor.submit(()->{
+            int a = 3;
             int b = 0;
             int c = a/b;
             System.out.println(c);
+            return "success";
         });
-
-        for(int i=0;i<1;i++){
-            future = threadPoolExecutor.submit(()->{
-                while(true){
-                    TimeUnit.SECONDS.sleep(5);
-                    LOGGER.info("taskOne is executing!");
-                }
-            });
-        }
 
         threadPoolExecutor.shutdown();
         do{
@@ -65,22 +54,6 @@ public class ThreadWithCommonPool {
             LOGGER.info("the task count is => {}", taskCount);
             LOGGER.info("active count is => {}", activeCount);
             LOGGER.info("the completed task count is => {}", completedTaskCount);
-            if(taskCount == completedTaskCount + 1){
-                long innerStart = System.currentTimeMillis();
-                long innerEnd ;
-                do{
-                    //等待一分钟未执行完成则终止线程
-                    TimeUnit.SECONDS.sleep(1);
-                    taskCount = threadPoolExecutor.getTaskCount();
-                    completedTaskCount = threadPoolExecutor.getCompletedTaskCount();
-                    innerEnd = System.currentTimeMillis();
-                }while (taskCount!=completedTaskCount && (innerEnd-innerStart)/(1000*60)<1);
-                //future.cancel()取消线程的执行可能会失败
-//                future.cancel(true);
-                threadPoolExecutor.shutdownNow();
-                LOGGER.info("current thread name is => {}", Thread.currentThread().getName());
-                LOGGER.info("interrupted！");
-            }
         }while (taskCount!=completedTaskCount);
 
         LOGGER.info("the final task is finished!");
