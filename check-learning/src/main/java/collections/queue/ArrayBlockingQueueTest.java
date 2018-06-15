@@ -9,7 +9,7 @@ public class ArrayBlockingQueueTest {
     @Test
     public void setData() throws InterruptedException {
 
-        ArrayBlockingQueue<String> queue = new ArrayBlockingQueue(16);
+        ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<>(16);
         queue.add("ZHOULIANG");
         queue.add("YANGXIAOXIAO");
         queue.add("WANGWENQI");
