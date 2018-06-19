@@ -44,13 +44,13 @@ fi
 JAVA_MEM_OPTS=""
 BITS=`java -version 2>&1 | grep -i 64-bit`
 if [ -n "$BITS" ]; then
-    JAVA_MEM_OPTS=" -server -Xmx1g -Xms1g -Xmn384m -XX:PermSize=64m -XX:MaxPermSize=128M -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -Dfile.encoding=UTF-8"
+    JAVA_MEM_OPTS=" -server -Xmx2000m -Xms2000m -Xmn384m -XX:PermSize=128m -XX:MaxPermSize=256M -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -Dfile.encoding=UTF-8"
 else
-    JAVA_MEM_OPTS=" -server -Xms1g -Xmx1g -XX:PermSize=128m -XX:MaxPermSize=256M -XX:SurvivorRatio=2 -XX:+UseParallelGC "
+    JAVA_MEM_OPTS=" -server -Xms2000m -Xmx2000m -XX:PermSize=256m -XX:MaxPermSize=502M -XX:SurvivorRatio=2 -XX:+UseParallelGC "
 fi
 
 echo -e "Starting the $SERVER_NAME ..."
-nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS com.zl.checkapi.main.UpdateFinanceType $1 > $STDOUT_FILE 2>&1 &
+nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS com.zl.checkapi.main.RiskFlowNoToSftp $1 > $STDOUT_FILE 2>&1 &
 
 sleep 5
 APP_PID=`ps -ef -ww | grep "java" | grep " -DappName=$SERVER_NAME " | awk '{print $2}'`
@@ -60,7 +60,5 @@ if [ -z "$APP_PID" ]; then
     echo "STDOUT: $STDOUT_FILE"
     exit 1
 fi
-
-tail -50f $LOG_FILE
 
 
