@@ -1,5 +1,8 @@
 package com.zl.checkapi.springrelated.jdkorcglib;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class UserServiceImpl implements UserService {
     @Override
     public String basicInfo(String certNo, String name, String mobile) {

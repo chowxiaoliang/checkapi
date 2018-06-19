@@ -393,7 +393,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>16.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.bqs.risk</groupId>
@@ -439,6 +439,13 @@
             <artifactId>umapper-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!--zip压缩-->
+        <dependency>
+            <groupId>net.lingala.zip4j</groupId>
+            <artifactId>zip4j</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
     </dependencies>
     <profiles>
         <profile>
@@ -447,11 +454,11 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <phoenix.jdbcUrl>jdbc:phoenix:hadoop1,hadoop2,hadoop3:2181</phoenix.jdbcUrl>
+                <phoenix.table.risk.event>PHN_T_RISK_EVENT_NEW</phoenix.table.risk.event>
                 <p.web.deploy.name>/serviceapi</p.web.deploy.name>
                 <p.web.res.root>/serviceapi/resources</p.web.res.root>
                 <p.dubbo.registry.address>zookeeper://192.168.1.212:2181</p.dubbo.registry.address>
-                <p.connection.url>jdbc:mysql://192.168.1.241:3306/risk?useUnicode=true&amp;characterEncoding=utf8
-                </p.connection.url>
                 <p.connection.username>bqs</p.connection.username>
                 <p.connection.password>
                     L09OewqYS+9y2oOX0033fyVIFSbOUZUNF8xdmjNyINWhIa7Qfn4XgE+9cZpKUcyDuOUz50IEVkkvrBN5vZznTQ==
@@ -481,10 +488,47 @@
                 <p.mg.connect.timeout>30000</p.mg.connect.timeout>
                 <p.mg.max.waittime>120000</p.mg.max.waittime>
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.phoenix</groupId>
+                    <artifactId>phoenix-core</artifactId>
+                    <version>4.8.1-HBase-1.0</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.apache.httpcomponents</groupId>
+                            <artifactId>httpclient</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.apache.zookeeper</groupId>
+                            <artifactId>zookeeper</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>log4j</groupId>
+                            <artifactId>log4j</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-api</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-log4j12</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>joda-time</groupId>
+                            <artifactId>joda-time</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
+
         </profile>
         <profile>
             <id>st</id>
             <properties>
+                <phoenix.jdbcUrl>jdbc:phoenix:hadoop1,hadoop2,hadoop3:2181</phoenix.jdbcUrl>
+                <phoenix.table.risk.event>PHN_T_RISK_EVENT</phoenix.table.risk.event>
                 <p.web.deploy.name>/serviceapi</p.web.deploy.name>
                 <p.web.res.root>/serviceapi/resources</p.web.res.root>
                 <p.dubbo.registry.address>zookeeper://10.0.0.1:2181</p.dubbo.registry.address>
@@ -519,10 +563,48 @@
                 <p.mg.connect.timeout>30000</p.mg.connect.timeout>
                 <p.mg.max.waittime>120000</p.mg.max.waittime>
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.phoenix</groupId>
+                    <artifactId>phoenix-core</artifactId>
+                    <version>4.8.1-HBase-1.0</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.apache.httpcomponents</groupId>
+                            <artifactId>httpclient</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.apache.zookeeper</groupId>
+                            <artifactId>zookeeper</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>log4j</groupId>
+                            <artifactId>log4j</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-api</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-log4j12</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>joda-time</groupId>
+                            <artifactId>joda-time</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>product</id>
             <properties>
+                <phoenix.jdbcUrl>
+                    jdbc:phoenix:hb-j5e517al6xib80rkb-001.hbase.rds.aliyuncs.com,hb-j5e517al6xib80rkb-002.hbase.rds.aliyuncs.com,hb-j5e517al6xib80rkb-003.hbase.rds.aliyuncs.com:2181
+                </phoenix.jdbcUrl>
+                <phoenix.table.risk.event>PHOENIX_T_RISK_EVENT</phoenix.table.risk.event>
                 <p.web.deploy.name>/serviceapi</p.web.deploy.name>
                 <p.web.res.root>/serviceapi/resources</p.web.res.root>
                 <p.dubbo.registry.address>zookeeper://10.0.0.7:2181?backup=10.0.0.6:2181</p.dubbo.registry.address>
@@ -558,6 +640,41 @@
                 <p.mg.connect.timeout>30000</p.mg.connect.timeout>
                 <p.mg.max.waittime>120000</p.mg.max.waittime>
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>com.aliyun.phoenix</groupId>
+                    <artifactId>ali-phoenix-core</artifactId>
+                    <version>4.12.0-AliHBase-1.1-0.2</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.apache.httpcomponents</groupId>
+                            <artifactId>httpclient</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.apache.zookeeper</groupId>
+                            <artifactId>zookeeper</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>log4j</groupId>
+                            <artifactId>log4j</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-api</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-log4j12</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>joda-time</groupId>
+                            <artifactId>joda-time</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+
+            </dependencies>
         </profile>
     </profiles>
 
