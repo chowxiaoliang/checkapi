@@ -1,5 +1,6 @@
 package com.zl.checkapi.main;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bqs.risk.datamarket.hbaseapi.entity.ReqResult;
 import com.zl.checkapi.phoenix.EventQueryServiceImpl;
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ public class RiskFlowNoToSftp {
 
 //    private static final String FILE_PATH = "C:\\Users\\lenovo\\Desktop\\crnet_2018-01-30.txt";
 
-    private static final List<String> LIST = new ArrayList<>();
+    private static final List<RiskEvents> LIST = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -109,9 +110,9 @@ public class RiskFlowNoToSftp {
             bufferedWriter = new BufferedWriter(writer);
             for(int i=0;i<LIST.size();i++){
                 if(i==LIST.size()-1){
-                    bufferedWriter.write(LIST.get(i));
+                    bufferedWriter.write(JSONObject.toJSONString(LIST.get(i)));
                 }else{
-                    bufferedWriter.write(LIST.get(i));
+                    bufferedWriter.write(JSONObject.toJSONString(LIST.get(i)));
                     bufferedWriter.newLine();
                 }
             }
@@ -143,9 +144,63 @@ public class RiskFlowNoToSftp {
         System.exit(0);
     }
 
-    private static void dataTransfer(List<Map<String, Object>> list, List<String> resultList){
+    private static void dataTransfer(List<Map<String, Object>> list, List<RiskEvents> resultList){
         for(Map<String, Object> map : list){
-            resultList.add(map.get("riskFlowNo")!=null?map.get("riskFlowNo").toString():null);
+            RiskEvents riskEvent = new RiskEvents();
+            riskEvent.setRiskFlowNo(map.get("riskFlowNo")!=null?map.get("riskFlowNo").toString():null);
+            riskEvent.setAppId(map.get("appId")!=null?map.get("appId").toString():null);
+            riskEvent.setEventType(map.get("eventType")!=null?map.get("eventType").toString():null);
+//            riskEvent.setCertNo(map.get("certNo")!=null?map.get("certNo").toString():null);
+//            riskEvent.setMobile(map.get("mobile")!=null?map.get("mobile").toString():null);
+            resultList.add(riskEvent);
+        }
+    }
+
+    static class RiskEvents{
+        private String riskFlowNo;
+        private String appId;
+        private String eventType;
+        private String certNo;
+        private String mobile;
+
+        public String getRiskFlowNo() {
+            return riskFlowNo;
+        }
+
+        public void setRiskFlowNo(String riskFlowNo) {
+            this.riskFlowNo = riskFlowNo;
+        }
+
+        public String getAppId() {
+            return appId;
+        }
+
+        public void setAppId(String appId) {
+            this.appId = appId;
+        }
+
+        public String getEventType() {
+            return eventType;
+        }
+
+        public void setEventType(String eventType) {
+            this.eventType = eventType;
+        }
+
+        public String getCertNo() {
+            return certNo;
+        }
+
+        public void setCertNo(String certNo) {
+            this.certNo = certNo;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
         }
     }
 
