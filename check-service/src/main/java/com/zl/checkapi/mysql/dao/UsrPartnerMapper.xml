@@ -361,7 +361,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="collection.map" >
+  <update id="updateByExampleSelective" parameterType="map" >
     update usr_partner
     <set >
       <if test="record.customId != null" >
@@ -465,9 +465,9 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="collection.map" >
+  <update id="updateByExample" parameterType="map" >
     update usr_partner
-    collection.set custom_id = #{record.customId,jdbcType=VARCHAR},
+    set custom_id = #{record.customId,jdbcType=VARCHAR},
       partner_id = #{record.partnerId,jdbcType=VARCHAR},
       operation_id = #{record.operationId,jdbcType=VARCHAR},
       custom_alias = #{record.customAlias,jdbcType=VARCHAR},
@@ -604,7 +604,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zl.checkapi.mysql.domain.UsrPartner" >
     update usr_partner
-    collection.set partner_id = #{partnerId,jdbcType=VARCHAR},
+    set partner_id = #{partnerId,jdbcType=VARCHAR},
       operation_id = #{operationId,jdbcType=VARCHAR},
       custom_alias = #{customAlias,jdbcType=VARCHAR},
       partner_status = #{partnerStatus,jdbcType=INTEGER},

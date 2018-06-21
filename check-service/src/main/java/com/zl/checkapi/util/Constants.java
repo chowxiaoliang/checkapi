@@ -134,7 +134,7 @@ public interface Constants {
 	}
 
 	interface Redis{
-		String SET = "collection/set";
+		String SET = "collections/set";
 		String GET = "get";
 	}
 }

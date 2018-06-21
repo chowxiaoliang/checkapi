@@ -142,7 +142,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="collection.map" >
+  <update id="updateByExampleSelective" parameterType="map" >
     update dict_item
     <set >
       <if test="record.itemId != null" >
@@ -162,9 +162,9 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="collection.map" >
+  <update id="updateByExample" parameterType="map" >
     update dict_item
-    collection.set item_id = #{record.itemId,jdbcType=VARCHAR},
+    set item_id = #{record.itemId,jdbcType=VARCHAR},
       entry_code = #{record.entryCode,jdbcType=VARCHAR},
       item_code = #{record.itemCode,jdbcType=VARCHAR},
       item_value = #{record.itemValue,jdbcType=VARCHAR}
@@ -189,7 +189,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zl.checkapi.mysql.domain.DictItem" >
     update dict_item
-    collection.set entry_code = #{entryCode,jdbcType=VARCHAR},
+    set entry_code = #{entryCode,jdbcType=VARCHAR},
       item_code = #{itemCode,jdbcType=VARCHAR},
       item_value = #{itemValue,jdbcType=VARCHAR}
     where item_id = #{itemId,jdbcType=VARCHAR}

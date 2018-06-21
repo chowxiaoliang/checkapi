@@ -243,7 +243,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="collection.map" >
+  <update id="updateByExampleSelective" parameterType="map" >
     update risk_bqs_data_feedback
     <set >
       <if test="record.id != null" >
@@ -302,9 +302,9 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="collection.map" >
+  <update id="updateByExample" parameterType="map" >
     update risk_bqs_data_feedback
-    collection.set id = #{record.id,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=BIGINT},
       risk_flow_no = #{record.riskFlowNo,jdbcType=VARCHAR},
       partner_id = #{record.partnerId,jdbcType=VARCHAR},
       cert_no = #{record.certNo,jdbcType=VARCHAR},
@@ -381,7 +381,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zl.checkapi.mysql.domain.RiskBqsDataFeedback" >
     update risk_bqs_data_feedback
-    collection.set risk_flow_no = #{riskFlowNo,jdbcType=VARCHAR},
+    set risk_flow_no = #{riskFlowNo,jdbcType=VARCHAR},
       partner_id = #{partnerId,jdbcType=VARCHAR},
       cert_no = #{certNo,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
