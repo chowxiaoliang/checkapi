@@ -41,7 +41,7 @@ public class RiskFlowNoToSftp {
 
     private static final String APP_ID = "sysAppId";
 
-    private static final String FILE_PATH = "/app/crnet_2018-01-30.txt";
+    private static final String FILE_PATH = "/app/crnet_2018-01-30(1).txt";
 
 //    private static final String FILE_PATH = "C:\\Users\\lenovo\\Desktop\\crnet_2018-01-30.txt";
 
@@ -60,6 +60,7 @@ public class RiskFlowNoToSftp {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
 
         Map<String, Object> queryMap = new HashMap<>(16);
         queryMap.put("occurTimeStart", String.valueOf(OCCUR_TIME_START));
@@ -150,8 +151,10 @@ public class RiskFlowNoToSftp {
             riskEvent.setRiskFlowNo(map.get("riskFlowNo")!=null?map.get("riskFlowNo").toString():null);
             riskEvent.setAppId(map.get("appId")!=null?map.get("appId").toString():null);
             riskEvent.setEventType(map.get("eventType")!=null?map.get("eventType").toString():null);
+            riskEvent.setName(map.get("name")!=null?map.get("name").toString():null);
 //            riskEvent.setCertNo(map.get("certNo")!=null?map.get("certNo").toString():null);
-//            riskEvent.setMobile(map.get("mobile")!=null?map.get("mobile").toString():null);
+            //手机号脱敏
+            riskEvent.setMobile(map.get("mobile")!=null?map.get("mobile").toString().replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2"):null);
             resultList.add(riskEvent);
         }
     }
@@ -162,6 +165,15 @@ public class RiskFlowNoToSftp {
         private String eventType;
         private String certNo;
         private String mobile;
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public String getRiskFlowNo() {
             return riskFlowNo;
