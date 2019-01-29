@@ -1,5 +1,8 @@
 package com.zl.checkapi.designmodel.factorypattern;
 
+/**
+ * @desc 简单工厂模式
+ */
 public class MainTest {
     public static void main(String[] args) {
         ShapeFactory shapeFactory = new ShapeFactory();
