@@ -88,7 +88,13 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
     private Exception clientStack(){
         return new Exception("Client stack trace!");
     }
-    
+
+    /**
+     * 任务提交之前先保存下提交任务线程的堆栈信息
+     * @param task
+     * @param clientStack
+     * @return
+     */
     private Runnable wrapRunnable(final Runnable task, final Exception clientStack){
         return () -> {
             try{
@@ -97,7 +103,7 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
             }catch (Exception e){
                 LOGGER.error("error occurs in thread!");
                 clientStack.printStackTrace();
-                throw e;
+//                throw e;
             }
         };
     }
