@@ -282,7 +282,7 @@
             <version>3.0.7.Final</version>
         </dependency>
         <!--RESful end-->
-        <!-- tomcat server -->
+        <!-- tomServerrver -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
@@ -459,10 +459,8 @@
                 <p.web.deploy.name>/serviceapi</p.web.deploy.name>
                 <p.web.res.root>/serviceapi/resources</p.web.res.root>
                 <p.dubbo.registry.address>zookeeper://192.168.1.212:2181</p.dubbo.registry.address>
-                <p.connection.username>bqs</p.connection.username>
-                <p.connection.password>
-                    L09OewqYS+9y2oOX0033fyVIFSbOUZUNF8xdmjNyINWhIa7Qfn4XgE+9cZpKUcyDuOUz50IEVkkvrBN5vZznTQ==
-                </p.connection.password>
+                <p.connection.username>root</p.connection.username>
+                <p.connection.password>zhouliang123456</p.connection.password>
                 <p.connection.publicKey>
                     MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAI22nXiHLgpfcQdOc0Mbb8t70pZdcCEUR11tJ/ZqH+yX9DMNwEkXAmHI15LgcQD7JpmF1YzL6LLqUx1W9L7jNqsCAwEAAQ==
                 </p.connection.publicKey>
