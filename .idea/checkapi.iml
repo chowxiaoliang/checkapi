@@ -23,6 +23,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.jacoco:org.jacoco.agent:runtime:0.7.6.201602180812" level="project" />
   </component>
 </module>
