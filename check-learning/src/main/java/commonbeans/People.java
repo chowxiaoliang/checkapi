@@ -2,6 +2,10 @@ package commonbeans;
 
 public class People {
 
+    static {
+        System.out.println("default name is zhouliang!");
+    }
+
     private String name;
 
     private Integer age;
