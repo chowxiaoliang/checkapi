@@ -6,8 +6,8 @@ import java.util.TreeMap;
 
 /**
  * @author zhouliang
- * @since 2018-05-22 10:03
  * @desc 自定义排序方式（升序 降序）
+ * @since 2018-05-22 10:03
  **/
 public class TreeMapTestTwo {
 
@@ -20,9 +20,9 @@ public class TreeMapTestTwo {
 
         treeMap.putIfAbsent("zhouliang", 4);
 
-        for(Map.Entry<String, Integer> entry : treeMap.entrySet()){
-            System.out.println("key =>"+entry.getKey());
-            System.out.println("valu =>"+entry.getValue());
+        for (Map.Entry<String, Integer> entry : treeMap.entrySet()) {
+            System.out.println("key =>" + entry.getKey());
+            System.out.println("valu =>" + entry.getValue());
             System.out.println("----------------------");
         }
     }

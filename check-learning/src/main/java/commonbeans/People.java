@@ -38,6 +38,6 @@ public class People {
 
     @Override
     public String toString() {
-        return "name:"+name+",sex:"+sex+",age"+age;
+        return "name:" + name + ",sex:" + sex + ",age" + age;
     }
 }

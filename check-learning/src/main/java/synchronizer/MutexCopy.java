@@ -9,27 +9,27 @@ import java.util.concurrent.locks.Lock;
  * @author zhouliang
  * @since 2018-05-14 16:47
  **/
-public class MutexCopy implements Lock , java.io.Serializable {
+public class MutexCopy implements Lock, java.io.Serializable {
 
-    private class Sync extends AbstractQueuedSynchronizer{
+    private class Sync extends AbstractQueuedSynchronizer {
         //判断是否锁定状态
         @Override
-        protected boolean isHeldExclusively(){
+        protected boolean isHeldExclusively() {
             return getExclusiveOwnerThread() == Thread.currentThread();
         }
 
         //获取资源
-        public void acquires(){
+        public void acquires() {
             if (compareAndSetState(0, 1)) {
                 setExclusiveOwnerThread(Thread.currentThread());
-            }else{
+            } else {
                 acquire(1);
             }
         }
 
         //尝试获取资源,立即返回，成功则返回true 失败则返回false
         @Override
-        public boolean tryAcquire(int acquires){
+        public boolean tryAcquire(int acquires) {
             final Thread current = Thread.currentThread();
             int c = getState();
             if (c == 0) {
@@ -37,8 +37,7 @@ public class MutexCopy implements Lock , java.io.Serializable {
                     setExclusiveOwnerThread(current);
                     return true;
                 }
-            }
-            else if (current == getExclusiveOwnerThread()) {
+            } else if (current == getExclusiveOwnerThread()) {
                 int nextc = c + acquires;
                 if (nextc < 0) {
                     // overflow
@@ -51,7 +50,7 @@ public class MutexCopy implements Lock , java.io.Serializable {
         }
 
         @Override
-        public boolean tryRelease(int releases){
+        public boolean tryRelease(int releases) {
             int c = getState() - releases;
             if (Thread.currentThread() != getExclusiveOwnerThread()) {
                 throw new IllegalMonitorStateException();
@@ -105,11 +104,10 @@ public class MutexCopy implements Lock , java.io.Serializable {
     }
 
     /**
-     *
-     * @desc 判断锁是否占用
      * @return
+     * @desc 判断锁是否占用
      */
-    public boolean isLocked(){
+    public boolean isLocked() {
         return sync.isHeldExclusively();
     }
 }

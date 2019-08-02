@@ -87,17 +87,17 @@
         </pluginManagement>
     </build>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>local snapshots</name>
-            <url>http://maven.baiqishi.com:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>releases</id>
-            <name>local releases</name>
-            <url>http://maven.baiqishi.com:8081/nexus/content/repositories/releases</url>
-        </repository>
-    </distributionManagement>
+<!--    <distributionManagement>-->
+<!--        <snapshotRepository>-->
+<!--            <id>snapshots</id>-->
+<!--            <name>local snapshots</name>-->
+<!--            <url>http://maven.baiqishi.com:8081/nexus/content/repositories/snapshots</url>-->
+<!--        </snapshotRepository>-->
+<!--        <repository>-->
+<!--            <id>releases</id>-->
+<!--            <name>local releases</name>-->
+<!--            <url>http://maven.baiqishi.com:8081/nexus/content/repositories/releases</url>-->
+<!--        </repository>-->
+<!--    </distributionManagement>-->
 
 </project>

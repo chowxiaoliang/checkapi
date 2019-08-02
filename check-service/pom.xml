@@ -206,7 +206,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
-            <version>2.8.4</version>
+            <version>2.6.4</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-log4j12</artifactId>
@@ -331,17 +331,17 @@
             <version>2.7</version>
         </dependency>
         <!-- 异步日志收集 -->
-        <dependency>
-            <groupId>com.bqs.ares</groupId>
-            <artifactId>ares-logback-kafka</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.kafka</groupId>
-                    <artifactId>kafka_2.9.2</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.bqs.ares</groupId>-->
+<!--            <artifactId>ares-logback-kafka</artifactId>-->
+<!--            <version>0.0.2-SNAPSHOT</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.apache.kafka</groupId>-->
+<!--                    <artifactId>kafka_2.9.2</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
         <!--jul桥接 用来输出 Java Logging Framework (JUL) -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -395,11 +395,11 @@
             <artifactId>guava</artifactId>
             <version>16.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.bqs.risk</groupId>
-            <artifactId>serviceapi-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.bqs.risk</groupId>-->
+<!--            <artifactId>serviceapi-api</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
         <!--jsoup-->
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -429,16 +429,16 @@
             <version>4.4.4</version>
         </dependency>
         <!-- hbase查询接口 -->
-        <dependency>
-            <groupId>com.bqs.risk.datamarket</groupId>
-            <artifactId>hbasequery-api</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bqs.umapper</groupId>
-            <artifactId>umapper-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.bqs.risk.datamarket</groupId>-->
+<!--            <artifactId>hbasequery-api</artifactId>-->
+<!--            <version>0.0.3-SNAPSHOT</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.bqs.umapper</groupId>-->
+<!--            <artifactId>umapper-api</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
         <!--zip压缩-->
         <dependency>
             <groupId>net.lingala.zip4j</groupId>

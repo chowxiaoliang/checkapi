@@ -5,8 +5,9 @@ import java.util.concurrent.TimeUnit;
 public class SynchronizedClassTest {
     static String name = "zhouliang";
     volatile static int num = 0;
+
     public static void main(String[] args) {
-        synchronized (String.class){
+        synchronized (String.class) {
             Mythread mythread1 = new Mythread();
             Mythread mythread2 = new Mythread();
             Thread thread = new Thread(mythread1);
@@ -21,27 +22,28 @@ public class SynchronizedClassTest {
         }
     }
 
-    public synchronized void test(){
+    public synchronized void test() {
         System.out.println("say something!");
     }
 
-    public synchronized static void testTwo(){
+    public synchronized static void testTwo() {
         System.out.println("say something!");
     }
 
-    static class Mythread implements Runnable{
+    static class Mythread implements Runnable {
         private final String innerStr = "";
+
         @Override
         public synchronized void run() {
-            synchronized (innerStr){
-                for(int i=0;i<10;i++){
+            synchronized (innerStr) {
+                for (int i = 0; i < 10; i++) {
                     System.out.println("current thread is => " + Thread.currentThread().getName() + "," + "current num is => " + num);
                     try {
                         TimeUnit.SECONDS.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    num ++;
+                    num++;
                 }
             }
         }

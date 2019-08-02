@@ -20,8 +20,8 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
 
     private static CommonThreadPoolExecutor commonPoolUtil;
 
-    public static synchronized CommonThreadPoolExecutor getCommonPoolUtil(){
-        if(commonPoolUtil==null){
+    public static synchronized CommonThreadPoolExecutor getCommonPoolUtil() {
+        if (commonPoolUtil == null) {
             commonPoolUtil = newCPUPool("common");
         }
         return commonPoolUtil;
@@ -31,7 +31,7 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
     }
 
-    public static CommonThreadPoolExecutor newCPUPool(String threadName){
+    public static CommonThreadPoolExecutor newCPUPool(String threadName) {
         return new CommonThreadPoolExecutor(THREAD_CPU_NUM * 2,
                 THREAD_CPU_NUM * 4,
                 60L,
@@ -41,7 +41,7 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
                 new ThreadPoolExecutor.AbortPolicy());
     }
 
-    public static CommonThreadPoolExecutor newIOPool(String threadName){
+    public static CommonThreadPoolExecutor newIOPool(String threadName) {
         return new CommonThreadPoolExecutor(THREAD_CPU_NUM * 4,
                 THREAD_CPU_NUM * 8,
                 60L,
@@ -75,32 +75,33 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
             Thread t = new Thread(group, r,
                     namePrefix + threadNumber.getAndIncrement(),
                     0);
-            if (t.isDaemon()){
+            if (t.isDaemon()) {
                 t.setDaemon(false);
             }
-            if (t.getPriority() != Thread.NORM_PRIORITY){
+            if (t.getPriority() != Thread.NORM_PRIORITY) {
                 t.setPriority(Thread.NORM_PRIORITY);
             }
             return t;
         }
     }
-    
-    private Exception clientStack(){
+
+    private Exception clientStack() {
         return new Exception("Client stack trace!");
     }
 
     /**
      * 任务提交之前先保存下提交任务线程的堆栈信息
+     *
      * @param task
      * @param clientStack
      * @return
      */
-    private Runnable wrapRunnable(final Runnable task, final Exception clientStack){
+    private Runnable wrapRunnable(final Runnable task, final Exception clientStack) {
         return () -> {
-            try{
+            try {
                 LOGGER.info("thread starts to run!");
                 task.run();
-            }catch (Exception e){
+            } catch (Exception e) {
                 LOGGER.error("error occurs in thread!");
                 clientStack.printStackTrace();
 //                throw e;
@@ -108,12 +109,12 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
         };
     }
 
-    private  <T> Callable<T> wrapCallable(final Callable<T> task, final Exception clientStack){
+    private <T> Callable<T> wrapCallable(final Callable<T> task, final Exception clientStack) {
         return () -> {
-            try{
+            try {
                 LOGGER.info("thread starts to run!");
                 return task.call();
-            }catch (Exception e){
+            } catch (Exception e) {
                 LOGGER.error("error occurs in thread!");
                 clientStack.printStackTrace();
                 throw e;
@@ -122,7 +123,7 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
     }
 
     @Override
-    public void execute(Runnable task){
+    public void execute(Runnable task) {
         super.execute(wrapRunnable(task, clientStack()));
     }
 
@@ -137,22 +138,22 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
     }
 
     @Override
-    public <T> Future<T> submit(Callable<T> task){
+    public <T> Future<T> submit(Callable<T> task) {
         return super.submit(wrapCallable(task, clientStack()));
     }
 
     @Override
-    protected void beforeExecute(Thread t, Runnable r){
+    protected void beforeExecute(Thread t, Runnable r) {
 
     }
 
     @Override
-    protected void afterExecute(Runnable r, Throwable t){
+    protected void afterExecute(Runnable r, Throwable t) {
 
     }
 
     @Override
-    protected void terminated(){
+    protected void terminated() {
 
     }
 }

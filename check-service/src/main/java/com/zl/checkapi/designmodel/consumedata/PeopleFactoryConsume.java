@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class PeopleFactoryConsume implements DataObjectFactory {
     @Override
     public DataObject getData(String data) {
-        if("people".equals(data)){
+        if ("people".equals(data)) {
             return new PeopleConsume();
         }
         return null;
