@@ -1,4 +1,4 @@
-package thread;
+package thread.threadlocal;
 
 import threadpool.ThreadPoolUtil;
 
