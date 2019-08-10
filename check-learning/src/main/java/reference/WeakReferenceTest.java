@@ -11,6 +11,7 @@ import java.lang.ref.WeakReference;
  * 软引用（Soft Reference）：软引用和弱引用的区别在于，若一个对象是弱引用可达，无论当前内存是否充足它都会被回收，而软引用可达的对象在内存不充足时才会被回收，因此软引用要比弱引用“强”一些
  * 虚引用（Phantom Reference）：虚引用是Java中最弱的引用，那么它弱到什么程度呢？它是如此脆弱以至于我们通过虚引用甚至无法获取到被引用的对象，虚引用存在的唯一作用就是当它指向的对象被回收后，虚引用本身会被加入到引用队列中，用作记录它指向的对象已被销毁。
  *
+ * WeakReference=>WeakHashMap=>ThreadLocal(https://majiaji.coding.me/2017/03/27/threadLocal-WeakReference%E5%92%8C%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/)
  * @author zhouliang
  */
 public class WeakReferenceTest extends TestCase {
@@ -19,7 +20,8 @@ public class WeakReferenceTest extends TestCase {
         A a = new A();
         C c = new C(a);
         a = null;
-        System.out.println(c.getA().getClass().getName());
+        System.gc();
+        System.out.println(c.getA());
     }
 
 
@@ -30,6 +32,8 @@ public class WeakReferenceTest extends TestCase {
         A a = new A();
         B b = new B(a);
         a = null;
+        System.gc();
+        System.out.println(a);
     }
 
     class A{}
