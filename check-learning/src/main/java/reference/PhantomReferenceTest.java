@@ -2,6 +2,10 @@ package reference;
 
 import junit.framework.TestCase;
 
+import java.lang.ref.PhantomReference;
+import java.lang.ref.ReferenceQueue;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author zhouliang
  * 虚引用
@@ -13,7 +17,18 @@ import junit.framework.TestCase;
  */
 public class PhantomReferenceTest extends TestCase {
 
-    public void testOne(){
+    public void testOne() throws InterruptedException {
+        Object object = new Object();
+        ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
+        PhantomReference<Object> phantomReference = new PhantomReference<>(object, referenceQueue);
+
+        System.out.println(phantomReference.get());
+        System.out.println(referenceQueue.poll());
+
+        object = null;
+        TimeUnit.SECONDS.sleep(20);
+        System.out.println(phantomReference.get());
+        System.out.println(referenceQueue.poll());
 
     }
 
