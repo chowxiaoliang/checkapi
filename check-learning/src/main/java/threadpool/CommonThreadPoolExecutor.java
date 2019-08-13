@@ -16,7 +16,7 @@ public class CommonThreadPoolExecutor extends ThreadPoolExecutor {
 
     private static final int THREAD_CPU_NUM = Runtime.getRuntime().availableProcessors();
 
-    private static final int MAX_TASK_NUM = 100_000_000;
+    private static final int MAX_TASK_NUM = 1000;
 
     private static CommonThreadPoolExecutor commonPoolUtil;
 
