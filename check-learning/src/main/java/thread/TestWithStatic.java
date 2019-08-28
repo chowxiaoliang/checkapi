@@ -34,7 +34,7 @@ public class TestWithStatic {
 
         private String name;
 
-        private static int num = 0;
+        private static volatile int num = 0;
 
     }
 }
