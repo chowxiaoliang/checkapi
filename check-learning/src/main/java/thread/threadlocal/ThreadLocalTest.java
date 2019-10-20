@@ -30,6 +30,9 @@ import java.util.concurrent.TimeUnit;
  * ThreadLocal的应用场合，我觉得最适合的是按线程多实例（每个线程对应一个实例）的对象的访问，并且这个对象很多地方都要用到
  *
  * 最常见的ThreadLocal使用场景为 用来解决 数据库连接、Session管理等。
+ *
+ *  ThreadLocalMap 中使用的 key 为ThreadLocal对象的弱引用，在垃圾回收器对其进行回收时，这个key是会被回收掉的，但是value是强引用，不会被回收，这样一来就会出现key为null的value，
+ *  这样的话就造成了内存泄漏，不过threadLocal已经为我们考虑了，手动调用remove（）则可以清除key为null的记录。
 
  * @since 2018-05-08 17:23
  **/
