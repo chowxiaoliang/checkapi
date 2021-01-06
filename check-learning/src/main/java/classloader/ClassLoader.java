@@ -5,9 +5,9 @@ package classloader;
  * @since 2018-06-28 11:38
  * @desc Java虚拟机可以安装多个类加载器，系统默认三个主要的类加载器，每个加载器负责加载特定位置的类：
          BootStrap，ExtClassLoader，AppClassLoader。
-        当Java虚拟机要加载一个类时，一般来说，一个加载请求由AppClassLoader发起，AppClassLoader找到该类则将之加载，
-        没有找到的话就委托给它的父加载器ExtClassLoader,ExtClassLoader找到则加载，没有则委托给它的父加载器BootStrapClassLoader，
-        BootStrapLoader找到该类则加载，没有找到则抛出一个ClassNotFoundException。
+        当Java虚拟机要加载一个类时，一般来说，一个加载请求由AppClassLoader发起，AppClassLoader将请求委托给ExtClassLoader，
+        ExtClassLoader再将请求委托给它的父加载器BootStrapClassLoader，
+        BootStrapLoader找到该类则加载，则一次向下委托，直到AppClassLoader，如果AppClassLoader还未找到该类则会抛出ClassNotFound的异常！
  **/
 public class ClassLoader {
     public static void main(String[] args) {
