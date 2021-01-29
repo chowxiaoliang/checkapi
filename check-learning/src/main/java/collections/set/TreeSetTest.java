@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
     最重要：
 
-    1、TreeSet 是二叉树实现的,Treeset中的数据是自动排好序的，不允许放入null值。
+    1、TreeSet 是二叉树实现的,Treeset中的数据是自动排好序的，不允许放入null值。TreeSet的底层是TreeMap，TreeMap的底层结构是红黑树。
 
     2、HashSet 是哈希表实现的,HashSet中的数据是无序的，可以放入null，但只能放入一个null，两者中的值都不能重复，就如数据库中唯一约束。
 
