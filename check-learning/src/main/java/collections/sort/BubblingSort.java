@@ -23,10 +23,10 @@ public class BubblingSort {
         }
         for(int i = 0;i<length-1;i++){
             for(int j=i+1;j<length;j++){
-                if(arrays[j-1] > arrays[j]){
-                    int temp = arrays[j];
-                    arrays[j] = arrays[j-1];
-                    arrays[j-1] = temp;
+                if(arrays[j] < arrays[i]){
+                    int temp = arrays[i];
+                    arrays[i] = arrays[j];
+                    arrays[j] = temp;
                 }
             }
         }
