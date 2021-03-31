@@ -2,6 +2,9 @@ package collections.sort;
 
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * 简单选择排序
+ */
 public class SelectSort {
 
     public static void main(String[] args) {

@@ -2,6 +2,9 @@ package collections.sort;
 
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * 插入排序
+ */
 public class InsertSort {
 
     public static void main(String[] args) {

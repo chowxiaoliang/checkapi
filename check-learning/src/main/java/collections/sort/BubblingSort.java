@@ -2,6 +2,9 @@ package collections.sort;
 
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * 冒泡排序
+ */
 public class BubblingSort {
 
     public static void main(String[] args) {
