@@ -1,9 +1,17 @@
 package collections.sort;
 
+import java.util.Arrays;
+
 /**
  * 快速排序
  */
 public class QuickSort {
+
+    public static void main(String[] args) {
+        int[] a = {12,23,5,48,12,3,46};
+        sort(a,0,a.length-1);
+        System.out.println(Arrays.toString(a));
+    }
 
     /**
      * 将数组的某一段元素进行划分，小的在左边，大的在右边
@@ -13,9 +21,11 @@ public class QuickSort {
         int base = a[end];
         //start一旦等于end，就说明左右两个指针合并到了同一位置，可以结束此轮循环。
         while(start < end){
-            while(start < end && a[start] <= base)
+            while(start < end && a[start] <= base){
                 //从左边开始遍历，如果比基准值小，就继续向右走
                 start++;
+            }
+
             //上面的while循环结束时，就说明当前的a[start]的值比基准值大，应与基准值进行交换
             if(start < end){
                 //交换
@@ -25,9 +35,11 @@ public class QuickSort {
                 //交换后，此时的那个被调换的值也同时调到了正确的位置(基准值右边)，因此右边也要同时向前移动一位
                 end--;
             }
-            while(start < end && a[end] >= base)
+            while(start < end && a[end] >= base){
                 //从右边开始遍历，如果比基准值大，就继续向左走
                 end--;
+            }
+
             //上面的while循环结束时，就说明当前的a[end]的值比基准值小，应与基准值进行交换
             if(start < end){
                 //交换

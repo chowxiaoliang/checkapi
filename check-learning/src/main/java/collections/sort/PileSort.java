@@ -1,13 +1,21 @@
 package collections.sort;
 
+import java.util.Arrays;
+
 /**
  * 堆排序 时间复杂度平均为O(nlogn)
  */
 public class PileSort {
 
+    public static void main(String[] args) {
+        int[] a = {12,3,24,32,11,5,98,5};
+        sort(a);
+        System.out.println(Arrays.toString(a));
+    }
+
     public static void sort(int []arr) {
         //1.构建大顶堆
-        for(int i=arr.length/2-1;i>=0;i--) {
+        for(int i=arr.length/2;i>=0;i--) {
             //从最后一个一个非叶子结点i从下至上，从右至左调整结构
             adjustHeap(arr,i,arr.length);
         }
