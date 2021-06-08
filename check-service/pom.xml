@@ -473,7 +473,7 @@
                 <p.hbase.zookeeper.quorum>hadoop1:2181,hadoop2:2181,hadoop3:2181</p.hbase.zookeeper.quorum>
                 <p.cluster.name>dev_es_cluster</p.cluster.name>
 
-                <p.redisindex.jediscluster.ip>redis.baiqishi.com</p.redisindex.jediscluster.ip>
+                <p.redisindex.jediscluster.ip>redisson.baiqishi.com</p.redisindex.jediscluster.ip>
                 <p.redisindex.jediscluster.port>5067</p.redisindex.jediscluster.port>
 
                 <p.cluster.nodes>192.168.1.240:9250,192.168.1.240:9260</p.cluster.nodes>

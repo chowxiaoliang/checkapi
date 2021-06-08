@@ -8,9 +8,9 @@ import com.zl.checkapi.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.ScanResult;
-import redis.clients.jedis.Tuple;
+import redisson.clients.jedis.JedisCluster;
+import redisson.clients.jedis.ScanResult;
+import redisson.clients.jedis.Tuple;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

@@ -4,7 +4,7 @@ import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.JedisCluster;
+import redisson.clients.jedis.JedisCluster;
 
 import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;

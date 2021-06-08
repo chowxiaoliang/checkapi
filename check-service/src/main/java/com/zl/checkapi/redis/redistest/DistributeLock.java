@@ -3,7 +3,7 @@ package com.zl.checkapi.redis.redistest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
-import redis.clients.jedis.JedisCluster;
+import redisson.clients.jedis.JedisCluster;
 
 import java.util.concurrent.TimeUnit;
 
