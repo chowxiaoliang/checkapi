@@ -17,7 +17,7 @@ public class ThreadPoolTest {
     }
     public static void main(String[] args) throws InterruptedException{
         long startTime = System.currentTimeMillis();
-        ThreadPoolExecutor threadPoolExecutor = ThreadPoolUtil.newIOPool("test-pool");
+        ThreadPoolExecutor threadPoolExecutor = ThreadPoolUtil.newIOPool("应用层.txt-pool");
         NumberWraper numberWraper = new NumberWraper();
         for(int i=0;i<20000;i++){
             threadPoolExecutor.execute(()->{

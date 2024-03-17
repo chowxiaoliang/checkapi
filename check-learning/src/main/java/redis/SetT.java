@@ -43,22 +43,22 @@ public class SetT {
         // sismember
         System.out.println("判断元素是否存在：" + jedisCluster.sismember("t", "a"));
 
-        jedisCluster.del("{test:t}:t1");
-        jedisCluster.del("{test:t}:t2");
-        jedisCluster.sadd("{test:t}:t1", "1","2","3","4");
-        jedisCluster.sadd("{test:t}:t2", "4","5","6","7");
+        jedisCluster.del("{应用层.txt:t}:t1");
+        jedisCluster.del("{应用层.txt:t}:t2");
+        jedisCluster.sadd("{应用层.txt:t}:t1", "1","2","3","4");
+        jedisCluster.sadd("{应用层.txt:t}:t2", "4","5","6","7");
         // smove 将元素从一个set移动到另一个set
-        jedisCluster.smove("{test:t}:t1", "{test:t}:t2", "1");
-        System.out.println(jedisCluster.smembers("{test:t}:t1"));
-        System.out.println(jedisCluster.smembers("{test:t}:t2"));
+        jedisCluster.smove("{应用层.txt:t}:t1", "{应用层.txt:t}:t2", "1");
+        System.out.println(jedisCluster.smembers("{应用层.txt:t}:t1"));
+        System.out.println(jedisCluster.smembers("{应用层.txt:t}:t2"));
 
         // sinter 求多个set的交集
-        System.out.println("求两个set的交集是：" + jedisCluster.sinter("{test:t}:t1","{test:t}:t2"));
+        System.out.println("求两个set的交集是：" + jedisCluster.sinter("{应用层.txt:t}:t1","{应用层.txt:t}:t2"));
 
         // sunion 求多个set的并集
-        System.out.println("求两个set的并集是：" + jedisCluster.sunion("{test:t}:t1","{test:t}:t2"));
+        System.out.println("求两个set的并集是：" + jedisCluster.sunion("{应用层.txt:t}:t1","{应用层.txt:t}:t2"));
 
         // sdiff 求多个set的差集
-        System.out.println("求两个set的差集是：" + jedisCluster.sdiff("{test:t}:t1","{test:t}:t2"));
+        System.out.println("求两个set的差集是：" + jedisCluster.sdiff("{应用层.txt:t}:t1","{应用层.txt:t}:t2"));
     }
 }

@@ -12,6 +12,6 @@ public class GetResult {
         String result = jedisCluster.get("height");
         System.out.println("获取指定key的值：" + result);
 
-        System.out.println(jedisCluster.hget("hmset:test", "name"));
+        System.out.println(jedisCluster.hget("hmset:应用层.txt", "name"));
     }
 }

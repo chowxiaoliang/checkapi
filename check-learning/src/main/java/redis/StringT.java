@@ -80,7 +80,7 @@ public class StringT {
         System.out.println("获取指定偏移量上的为：" + jedisCluster.getbit("andy", 3));
 
         // setrange 用指定的字符串覆盖给定key所储存的字符串值，覆盖的位置从偏移量offset开始
-        System.out.println("根据偏移量覆盖旧值：" + jedisCluster.setrange("andy", 3, "test"));
+        System.out.println("根据偏移量覆盖旧值：" + jedisCluster.setrange("andy", 3, "应用层.txt"));
 
         // getrange
 
